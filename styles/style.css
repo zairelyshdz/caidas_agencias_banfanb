@@ -1,0 +1,76 @@
+body{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index: 1000;
+}
+
+.sidebar a{ 
+    padding: 15px 25px;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background: #575757;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10%;
+    right: 25px;
+    font-size: 2em!important;
+    padding: 0!important;
+}
+
+.main-content {
+    transition: margin-left 0.5s;
+    padding: 20px;
+}
+
+.open-btn {
+    font-size: 1.em;
+    cursor: pointer;
+    background: none;
+    padding: 15px;
+}
+
+@media(max-width: 768px){
+    .sidebar{
+        width: 100%!important;
+    }
+    .main-content{
+        margin-left: 0!important;
+    }
+}
+
+
+.chart-container{
+    position: relative;
+    width: 80%;
+    margin: 20px auto;
+}
+
+.data-dropdown{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+}

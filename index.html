@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Página de prueba</title>
+</head>
+<body>
+    <!---<div class="content">
+        <h1>Agencias Caídas</h1>
+    </div> --->
+
+    <button class="open-btn" onclick="toggleSidebar()">H</button>
+
+    <div class="sidebar" id="sidebar">
+        <a href="#" class="close-btn" onclick="toggleSidebar()">x</a>
+        <a href="#">Enero</a>
+        <a href="#">Febrero</a>
+        <a href="#">Marzo</a>
+        <a href="#">Abril</a>
+        <a href="#">Mayo</a>
+        <a href="#">Junio</a>
+        <a href="#">Julio</a>
+        <a href="#">Agosto</a>
+        <a href="#">Septiembre</a>
+        <a href="#">Octubre</a>
+        <a href="#">Noviembre</a>
+        <a href="#">Diciembre</a>
+    </div>
+
+    <div class="main-content" id="mainContent">
+    
+    </div>
+    
+    <div class="chart-container">
+        <select id="dataSelector" class="data-dropdown">
+            <option value="dataset1">Datos 2023</option>
+            <option value="dataset1">Datos 2024</option>
+            <option value="dataset1">Datos 2025</option>
+        </select>
+    </div> 
+
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="src/chats.js"></script>
+      <script src="src/script.js"></script>
+      
+</body>
+</html>
