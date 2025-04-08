@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Gráficos</title>
+    <link rel="stylesheet" href="styless/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Panel de Administración - Gráficos</h1>
+        
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'chart1')">Gráfico 1</button>
+            <button class="tablinks" onclick="openTab(event, 'chart2')">Gráfico 2</button>
+            <button class="tablinks" onclick="openTab(event, 'chart3')">Gráfico 3</button>
+        </div>
+        
+        <!-- Formulario para Gráfico 1 -->
+        <div id="chart1" class="tabcontent" style="display: block;">
+            <form id="chart1Form" class="chart-form">
+                <h2>Reporte de Fallas</h2>
+                
+                <div class="form-group">
+                    <label for="chart1Type">Tipo de Gráfico:</label>
+                    <select id="chart1Type" name="type">
+                        <option value="bar">Barras</option>
+                        <option value="line">Líneas</option>
+                        <option value="pie">Tarta</option>
+                        <option value="doughnut">Dona</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Etiquetas (separadas por comas):</label>
+                    <input type="text" id="chart1Labels" value="8:30,9:00,10:00,11:00,12:00,13:00,14:00,15:30">
+                </div>
+                
+                <div id="chart1Datasets">
+                    <!-- Los datasets se generarán dinámicamente -->
+                </div>
+                
+                <button type="button" class="add-dataset" onclick="addDataset('chart1')">Añadir Dataset</button>
+                
+                <div class="form-group">
+                    <button type="button" onclick="saveChartConfig('chart1')">Guardar Configuración</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Formulario para Gráfico 2 -->
+        <div id="chart2" class="tabcontent">
+            <form id="chart2Form" class="chart-form">
+                <h2>Gráfico con Selector</h2>
+                
+                <div class="form-group">
+                    <label for="chart2Type">Tipo de Gráfico:</label>
+                    <select id="chart2Type" name="type">
+                        <option value="bar">Barras</option>
+                        <option value="line">Líneas</option>
+                    </select>
+                </div>
+                
+                <div id="chart2DatasetsConfig">
+                    <!-- Configuración de todos los datasets -->
+                </div>
+                
+                <button type="button" class="add-dataset" onclick="addDatasetConfig('chart2')">Añadir Opción de Dataset</button>
+                
+                <div class="form-group">
+                    <button type="button" onclick="saveChartConfig('chart2')">Guardar Configuración</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Formulario para Gráfico 3 -->
+        <div id="chart3" class="tabcontent">
+            <form id="chart3Form" class="chart-form">
+                <h2>Gráfico de Sedes por Mes</h2>
+                
+                <div class="form-group">
+                    <label for="chart3Type">Tipo de Gráfico:</label>
+                    <select id="chart3Type" name="type">
+                        <option value="bar">Barras</option>
+                        <option value="line">Líneas</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Etiquetas (meses, separados por comas):</label>
+                    <input type="text" id="chart3Labels" value="Ene,Feb,Mar,Abr,May,Jun,Jul,Ago,Sep,Oct,Nov,Dic">
+                </div>
+                
+                <div id="chart3Datasets">
+                    <!-- Los datasets se generarán dinámicamente -->
+                </div>
+                
+                <button type="button" class="add-dataset" onclick="addDataset('chart3')">Añadir Sede</button>
+                
+                <div class="form-group">
+                    <button type="button" onclick="saveChartConfig('chart3')">Guardar Configuración</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Función para cambiar entre pestañas
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            
+            const tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        
+        // Función para añadir un nuevo dataset a un gráfico
+        function addDataset(chartId) {
+            const datasetsContainer = document.getElementById(`${chartId}Datasets`);
+            const datasetCount = datasetsContainer.children.length;
+            const newIndex = datasetCount + 1;
+            
+            const datasetDiv = document.createElement('div');
+            datasetDiv.className = 'dataset-controls';
+            datasetDiv.innerHTML = `
+                <h3>Dataset ${newIndex}</h3>
+                <div class="form-group">
+                    <label for="${chartId}Dataset${newIndex}Label">Etiqueta:</label>
+                    <input type="text" id="${chartId}Dataset${newIndex}Label" value="Sede ${String.fromCharCode(64 + newIndex)}">
+                </div>
+                <div class="form-group">
+                    <label for="${chartId}Dataset${newIndex}Data">Datos (separados por comas):</label>
+                    <input type="text" id="${chartId}Dataset${newIndex}Data" value="12,19,3,5,2,3">
+                </div>
+                <div class="form-group">
+                    <label for="${chartId}Dataset${newIndex}BgColor">Color de fondo (RGBA):</label>
+                    <input type="text" id="${chartId}Dataset${newIndex}BgColor" value="rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)">
+                </div>
+                <div class="form-group">
+                    <label for="${chartId}Dataset${newIndex}BorderColor">Color del borde (RGB/RGBA):</label>
+                    <input type="text" id="${chartId}Dataset${newIndex}BorderColor" value="rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)">
+                </div>
+                <button type="button" class="remove-dataset" onclick="this.parentNode.remove()">Eliminar Dataset</button>
+            `;
+            
+            datasetsContainer.appendChild(datasetDiv);
+        }
+        
+        // Función para añadir configuración de dataset al gráfico 2
+        function addDatasetConfig(chartId) {
+            const datasetsContainer = document.getElementById(`${chartId}DatasetsConfig`);
+            const datasetCount = datasetsContainer.children.length;
+            const newIndex = datasetCount + 1;
+            
+            const datasetDiv = document.createElement('div');
+            datasetDiv.className = 'dataset-controls';
+            datasetDiv.innerHTML = `
+                <h3>Opción de Dataset ${newIndex}</h3>
+                <div class="form-group">
+                    <label for="${chartId}Dataset${newIndex}Name">Nombre de la opción:</label>
+                    <input type="text" id="${chartId}Dataset${newIndex}Name" value="Semana ${newIndex}">
+                </div>
+                <div class="form-group">
+                    <label for="${chartId}Dataset${newIndex}Labels">Etiquetas (separadas por comas):</label>
+                    <input type="text" id="${chartId}Dataset${newIndex}Labels" value="Ene,Feb,Mar,Abr,May,Jun,Jul,Ago,Sep,Oct,Nov,Dic">
+                </div>
+                <div class="form-group">
+                    <label for="${chartId}Dataset${newIndex}Data">Datos (separados por comas):</label>
+                    <input type="text" id="${chartId}Dataset${newIndex}Data" value="${Array(12).fill().map(() => Math.floor(Math.random() * 100)).join(',')}">
+                </div>
+                <div class="form-group">
+                    <label for="${chartId}Dataset${newIndex}Label">Etiqueta del dataset:</label>
+                    <input type="text" id="${chartId}Dataset${newIndex}Label" value="Agencias">
+                </div>
+                <div class="form-group">
+                    <label for="${chartId}Dataset${newIndex}BorderColor">Color del borde:</label>
+                    <input type="text" id="${chartId}Dataset${newIndex}BorderColor" value="#${Math.floor(Math.random() * 16777215).toString(16)}">
+                </div>
+                <div class="form-group">
+                    <label for="${chartId}Dataset${newIndex}BgColor">Color de fondo (RGBA):</label>
+                    <input type="text" id="${chartId}Dataset${newIndex}BgColor" value="rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)">
+                </div>
+                <button type="button" class="remove-dataset" onclick="this.parentNode.remove()">Eliminar Opción</button>
+            `;
+            
+            datasetsContainer.appendChild(datasetDiv);
+        }
+        
+        // Función para guardar la configuración de un gráfico
+        async function saveChartConfig(chartId) {
+            let chartConfig = {
+                type: document.getElementById(`${chartId}Type`).value,
+                data: {
+                    labels: [],
+                    datasets: []
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: { mode: 'index', intersect: false }
+                    },
+                    scales: {
+                        x: { stacked: chartId === 'chart3', title: { display: true } },
+                        y: { 
+                            stacked: chartId === 'chart3', 
+                            title: { display: true },
+                            beginAtZero: true,
+                            max: chartId === 'chart1' ? 30 : undefined
+                        }
+                    }
+                }
+            };
+            
+            if (chartId === 'chart2') {
+                // Configuración especial para el gráfico 2
+                const datasetsContainer = document.getElementById(`${chartId}DatasetsConfig`);
+                const datasets = {};
+                
+                for (let i = 0; i < datasetsContainer.children.length; i++) {
+                    const datasetDiv = datasetsContainer.children[i];
+                    const index = i + 1;
+                    
+                    datasets[`dataset${index}`] = {
+                        labels: document.getElementById(`${chartId}Dataset${index}Labels`).value.split(','),
+                        data: document.getElementById(`${chartId}Dataset${index}Data`).value.split(',').map(Number),
+                        label: document.getElementById(`${chartId}Dataset${index}Label`).value,
+                        borderColor: document.getElementById(`${chartId}Dataset${index}BorderColor`).value,
+                        backgroundColor: document.getElementById(`${chartId}Dataset${index}BgColor`).value,
+                        borderWidth: 1
+                    };
+                }
+                
+                chartConfig = {
+                    type: 'bar',
+                    data: {
+                        labels: datasets.dataset1?.labels || [],
+                        datasets: [{
+                            label: datasets.dataset1?.label || '',
+                            data: datasets.dataset1?.data || [],
+                            borderColor: datasets.dataset1?.borderColor || '',
+                            backgroundColor: datasets.dataset1?.backgroundColor || '',
+                            fill: true
+                        }]
+                    },
+                    options: { responsive: true },
+                    _datasetsConfig: datasets
+                };
+                
+            } else {
+                // Configuración para gráficos 1 y 3
+                chartConfig.data.labels = document.getElementById(`${chartId}Labels`).value.split(',');
+                
+                const datasetsContainer = document.getElementById(`${chartId}Datasets`);
+                for (let i = 0; i < datasetsContainer.children.length; i++) {
+                    const datasetDiv = datasetsContainer.children[i];
+                    const index = i + 1;
+                    
+                    chartConfig.data.datasets.push({
+                        label: document.getElementById(`${chartId}Dataset${index}Label`).value,
+                        data: document.getElementById(`${chartId}Dataset${index}Data`).value.split(',').map(Number),
+                        backgroundColor: document.getElementById(`${chartId}Dataset${index}BgColor`).value,
+                        borderColor: document.getElementById(`${chartId}Dataset${index}BorderColor`).value,
+                        borderWidth: 1
+                    });
+                }
+            }
+            
+            try {
+                const response = await fetch('save_chart.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: chartId === 'chart1' ? 'Reporte de Fallas' : 
+                              chartId === 'chart2' ? 'Grafico con Selector' : 'Grafico de Sedes',
+                        config: chartConfig
+                    })
+                });
+                
+                const result = await response.json();
+                if (result.status === 'success') {
+                    alert('Configuración guardada correctamente');
+                } else {
+                    alert('Error al guardar la configuración');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al guardar la configuración');
+            }
+        }
+        
+        // Inicializar formularios con datos por defecto
+        document.addEventListener('DOMContentLoaded', () => {
+            // Gráfico 1 - 5 datasets iniciales
+            for (let i = 0; i < 5; i++) {
+                addDataset('chart1');
+            }
+            
+            // Gráfico 2 - 3 opciones de dataset iniciales
+            for (let i = 0; i < 3; i++) {
+                addDatasetConfig('chart2');
+            }
+            
+            // Gráfico 3 - 5 datasets iniciales
+            for (let i = 0; i < 5; i++) {
+                addDataset('chart3');
+            }
+        });
+    </script>
+</body>
+</html>

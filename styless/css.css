@@ -1,0 +1,16 @@
+.body{
+    background-color: #f9f9f9;
+    font-family: poppins, sans-serif;
+    font-size: 20px;
+    color: #333; 
+}
+
+.Excel{
+    font-size: 30px;
+    color: #000;
+    text-align: center;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
