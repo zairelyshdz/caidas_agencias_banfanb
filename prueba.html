@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gráficos con Excel</title>
+    <link rel="stylesheet" href="styless/css.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h1>Sube tu archivo Excel</h1>
     <input type="file" id="uploadExcel" />
-    <canvas id="myChart" width="400" height="200"></canvas>
+    <canvas id="myChart" width="200" height="100"></canvas>
 
     <script>
         document.getElementById('uploadExcel').addEventListener('change', function (e) {
@@ -25,15 +26,16 @@
                 const jsonData = XLSX.utils.sheet_to_json(sheet); // Convertir a JSON
 
                 console.log(jsonData); // Verifica los datos en la consola
+                console.log(Object.keys(jsonData[0])); // Verifica los encabezados detectados
 
                 // Procesar los datos del Excel
                 const labels = [];
                 const values = [];
 
                 jsonData.forEach(row => {
-                    if (row['AGENCIA'] && row['Marzo %']) { // Verifica que las columnas existan
-                        labels.push(row['AGENCIA']);
-                        values.push(parseFloat(row['Marzo %'].replace(',', '.'))); // Convertir 'Marzo %' a número
+                    if (row['AGENCIAS'] && row['TOTAL DE FALLAS']) { // Verifica que las columnas existan
+                        labels.push(row['AGENCIAS']);
+                        values.push(row['TOTAL DE FALLAS']); // 
                     }
                 });
 
@@ -44,13 +46,13 @@
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: 'Marzo %',
+                            label: 'Total de Fallas',
                             data: values,
                             backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
                         }]
                     },
                     options: {
-                        responsive: true,
+                        responsive: false,
                         plugins: {
                             legend: {
                                 position: 'top',
@@ -63,5 +65,7 @@
             reader.readAsArrayBuffer(file);
         });
     </script>
+
+    <footer style="height: 20px; width: 20px;"></footer>
 </body>
 </html>
