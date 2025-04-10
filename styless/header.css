@@ -1,0 +1,177 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: poppins, sans-serif; 
+    background-color: #efedef;
+}
+
+h1{
+    text-align: center;
+    margin: 20px 0;
+    font-size: 30px;
+    
+}
+
+li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: #550000;
+    font-size: 1rem;
+}
+
+a:hover{
+    color: #8f7777;
+}
+
+header{
+    position: relative;
+    padding: 0 2rem;
+    background-color: #550000;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar{
+    width: 100%;
+    height: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #550000;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .logo a{
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: block;
+    background: none; /* Elimina cualquier fondo */
+}
+
+.navbar .logo img {
+    background: none; /* Asegúrate de que la imagen no tenga fondo */
+    display: block; /* Asegura que la imagen no tenga márgenes extra */
+}
+
+.navbar .links{
+    display: flex;
+    gap: 2rem;
+    background: #550000;
+}
+
+.navbar .links a {
+    background: none; /* Elimina cualquier fondo */
+    color: #550000; /* Asegúrate de que el texto sea visible */
+    padding: 0; /* Elimina cualquier relleno extra */
+}
+
+.navbar .toggle_btn{
+    color: #efedef;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none;
+    background: none; /* Elimina cualquier fondo */
+    border: none; /* Asegúrate de que no haya bordes */
+    padding: 0; /* Elimina cualquier relleno extra */
+}
+
+.navbar .toggle_btn i {
+    background: none; /* Elimina cualquier fondo del ícono */
+    color: #efedef; /* Asegúrate de que el ícono sea visible */
+}
+
+.action_btn{
+    background-color: #efedef;
+    color:#550000;
+    padding: 0.5rem 1rem;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: scale0.2 ease;
+}
+.action_btn:hover{
+    scale: 1.05;
+    color: #8f7777;
+}
+
+.action_btn:active{
+    scale: 0.95;
+}
+
+.dropdown_menu {
+    display: none; /* Oculta el menú por defecto */
+    position: absolute;
+    right: 2rem;
+    top: 60px;
+    width: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dropdown_menu.open {
+    display: block; /* Muestra el menú cuando tiene la clase 'open' */
+    height: auto;
+}
+
+ .dropdown_menu li{
+    padding: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown_menu .action_btn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 992px){
+    .navbar .links,
+    .navbar .action_btn{
+        display: none; /* Oculta los enlaces y el botón en pantallas pequeñas */
+    }
+
+    .navbar .toggle_btn{
+        display: block; /* Muestra el botón de alternar */
+    }
+
+    .dropdown_menu {
+        display: none; /* Oculta el menú desplegable por defecto */
+    }
+
+    .dropdown_menu.open {
+        display: block; /* Muestra el menú desplegable cuando está abierto */
+    }
+}
+
+@media (max-width: 576px) {
+    .dropdown_menu{
+        left: 2rem;
+        width: unset;
+    }
+
+    .myChart{
+        width: 100%;
+    }
+
+}
+
+canvas {
+    padding: 10%;
+    width: 100% !important; 
+    height: auto !important; 
+}

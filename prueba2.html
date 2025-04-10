@@ -1,40 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficos con Excel</title>
+    <link rel="stylesheet" href="styless/css.css">
+    <link rel="stylesheet" href="styless/header.css">
     <script src="https://kit.fontawesome.com/73fcefcd98.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="styless/header.css">
-    <title>Header</title>
 </head>
 <body>
-    <header>
-        <div class="navbar">
-            <div class="logo"><a href="http://localhost/workspace/index.html"><img src="img/banfanb-logo.png" alt="80px" height="80px"></div>
-            <ul class="links">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="meses/">Meses</a></li>
-            </ul>
-            <a href="#" class="action_btn">Inicio de Sesión</a>
-            <div class="toggle_btn">
-                <i class="fa-solid fa-bars"></i>
-            </div>
 
-            <div class="dropdown_menu">
-                <li><a href="http://localhost/workspace/index.html">Inicio</a></li>
-                <li><a href="meses/"></a></li>
-                <li><a href="#" class="action_btn">Inicio de Sesión</a></li>
-            </div>
-        </div>
-    </header>   
     <h1>Agencias Caídas</h1>
 
     <canvas id="myChart" width="200" height="100"></canvas>
-    <canvas id="mySecondChart" width="200" height="100"></canvas>
 
-    
     <script>
         // Ruta del archivo Excel en el servidor
         const excelFilePath = 'http://localhost/workspace/Libro1.xlsx';
@@ -102,19 +83,17 @@
         loadExcelFile();
 
     </script>
-    <script>
-        const toggleBtn = document.querySelector('.toggle_btn');
-        const toggleBtnIcon = document.querySelector('.toggle_btn i');
-        const dropDownMenu = document.querySelector('.dropdown_menu'); // Cambiado a .dropdown_menu
 
-        toggleBtn.onclick = function () {
-            dropDownMenu.classList.toggle('open'); // Alterna la clase 'open'
-            const isOpen = dropDownMenu.classList.contains('open');
-            toggleBtnIcon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'; // Cambia el icono
-        };
-    </script>
+<script>
+    const toggleBtn = document.querySelector('.toggle_btn');
+    const toggleBtnIcon = document.querySelector('.toggle_btn i');
+    const dropDownMenu = document.querySelector('.dropdown_menu'); // Cambiado a .dropdown_menu
 
-    <script src="src/charts.js"></script>
-    
+    toggleBtn.onclick = function () {
+        dropDownMenu.classList.toggle('open'); // Alterna la clase 'open'
+        const isOpen = dropDownMenu.classList.contains('open');
+        toggleBtnIcon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'; // Cambia el icono
+    };
+</script>
 </body>
 </html>

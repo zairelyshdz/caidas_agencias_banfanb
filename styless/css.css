@@ -1,81 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: poppins, sans-serif;
+}
+
+
 body{
     background-color: #edefef;
     font-family: poppins, sans-serif;
     font-size: 20px;
     color: #333;
     text-align: center;
-    padding: 100px;
-    margin: 20px;
+    padding: 0px;
+    margin: 0px;
     position: relative;
 }
 
-*{
-    list-style: none;
-    box-sizing: border-box;
-}
-
-header{
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 5%;
-    height: 100px;
-}
-
-
-.logo{
-    height: 100px;
-}
-
-.menu{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.item{
-    margin: 0 15px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    color: #550000;
-}
-
-.item:hover{
-    color: #ff0505;
-    transform: scale(1.1);
-}
-
-#menu{
-    display: none;
-}
-
-.menu-icono{
-    width: 25px;   
-}
-
-label{
-    cursor: pointer;
-    display: none;
-}
-
-.btn{
-    padding: 10px 24px;
-    border-radius: 30px;
-    background-color: #550000;
-    color: #f2f2f2;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.btn:hover{
-    background-color: #360101;
-    transform: scale(1.1);
-}
 
 /*.button-container {
     display: flex;
@@ -164,37 +105,6 @@ label{
 }*/
 
 @media(max-width: 768px){
-    .menu{
-        padding: 30px;
-        margin: 0;
-    }
-
-    label{
-        display: initial;
-    }
-
-    .menu{
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: #333;
-        display: none;
-    }
-
-    .item{
-        margin: 0 20px 0 0;
-        width: 100%;
-    }
-
-    .btn{
-        width: 100px;
-    }
-
-#menu:checked ~ .menu{
-        display: initial;
-    }
-
     .myChart{
         width: 100%!important;
     }

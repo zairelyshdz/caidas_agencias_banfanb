@@ -1,74 +1,64 @@
+// Ruta del archivo Excel en el servidor
+const excelFilePathSecond = 'http://localhost/workspace/Libro1.xlsx';
 
-  const ctx = document.getElementById('myChart');
-      
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['8:30', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:30'],
-      datasets: [
-        {
-          label: 'Sede A',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
-        },
-        {
-          label: 'Sede B',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
-        },
-        {
-          label: 'Sede C',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: 'rgba(180, 125, 61, 0.2)',
-          borderColor: 'rgba(180, 125, 61, 1)',
-          borderWidth: 1
-        },
-        {
-          label: 'Sede D',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: 'rgba(153, 66, 235, 0.2)',
-          borderColor: 'rgba(153, 66, 235, 1)',
-          borderWidth: 1
-        },
-        {
-          label: 'Sede E',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'top',
-        },
-        tooltip: {
-          mode: 'index',
-          intersect: false,
-        },
-      },
-      scales: {
-        x: {
-          stacked: false,
-          title: {
-            display: true,
-          },
-        },
-        y: {
-          stacked: false,
-          title: {
-            display: true,
-          },
-          beginAtZero: true,
-          max: 30, 
-        },
-      },
-    }
-  });
+// Función para cargar y procesar el archivo Excel
+function loadExcelFile() {
+    fetch(excelFilePath)
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            const workbook = XLSX.read(data, { type: 'array' });
+
+            // Accede al nombre de la segunda hoja
+            const sheetName = workbook.SheetNames[1]; // Índice 1 corresponde a la segunda hoja
+            const sheet = workbook.Sheets[sheetName];
+            const jsonData = XLSX.utils.sheet_to_json(sheet); // Convertir a JSON
+
+            console.log(jsonData); // Verifica los datos en la consola
+
+            // Procesar los datos del Excel
+            const labels = [];
+            const values = [];
+
+            jsonData.forEach(row => {
+                if (row['AGENCIAS'] && row['TOTAL DE FALLAS']) { // Verifica que las columnas existan
+                    labels.push(row['AGENCIAS']);
+                    values.push(row['TOTAL DE FALLAS']); 
+                }
+            });
+
+            // Generar el gráfico
+            const ctx = document.getElementById('mySecondChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar', // Cambia a 'pie', 'line', etc., según el tipo de gráfico
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'CAIDAS DIARIAS',
+                        data: values,
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return value; // Devuelve el valor tal cual
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error al cargar el archivo Excel:', error));
+}
+
+// Cargar el archivo Excel al cargar la página
+loadExcelFile();
