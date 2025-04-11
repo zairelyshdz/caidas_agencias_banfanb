@@ -29,12 +29,12 @@ li{
 
 a{
     text-decoration: none;
-    color: #642828;
+    color: #bb5e5a;
     font-size: 1rem;
 }
 
 a:hover{
-    color: #8f7777;
+    color: #bb5e5a;
 }
 
 header{
@@ -94,14 +94,14 @@ header{
     font-size: 1.5rem;
     cursor: pointer;
     display: none;
-    background: none; /* Elimina cualquier fondo */
-    border: none; /* Asegúrate de que no haya bordes */
-    padding: 0; /* Elimina cualquier relleno extra */
+    background: none; 
+    border: none; 
+    padding: 0; 
 }
 
 .navbar .toggle_btn i {
-    background: none; /* Elimina cualquier fondo del ícono */
-    color: #efedef; /* Asegúrate de que el ícono sea visible */
+    background: none; 
+    color: #efedef; 
 }
 
 .action_btn{
@@ -118,7 +118,7 @@ header{
 }
 .action_btn:hover{
     scale: 1.05;
-    color: #8f7777;
+    color: #bb5e5a;
 }
 
 .action_btn:active{
@@ -154,11 +154,11 @@ header{
 }
 
 .submenu li a:hover {
-    color: #8f7777;
+    color: #111111;
 }
 
 .menu:hover .submenu {
-    display: block; /* Muestra el submenú al pasar el mouse */
+    display: block; /* Muestra el submenú al poner el mouse*/
 }
 
 .dropdown_menu {
@@ -167,8 +167,8 @@ header{
     right: 2rem;
     top: 60px;
     width: 300px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
+    background: #c40a02;
+    backdrop-filter: blur(100%px) !important;
     border-radius: 10px;
     overflow: hidden;
     transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -184,6 +184,13 @@ header{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.dropdown_menu a{
+    color: #efedef;
+    background: none;
+    list-style: none;
+    text-decoration: none;
 }
 
 .dropdown_menu .action_btn{
@@ -232,9 +239,9 @@ header{
     font-family: poppins, sans-serif;
     background: none;
     color: #111;
-    padding: 20px;
+    padding: 20px;  
     text-align: center;
-    align-content: center;
+    align-items: center !important;
     width: 300px;
     margin: 0; 
     border-radius: 10px; 
@@ -246,7 +253,6 @@ header{
     font-size: 1.2em !important;
     margin-bottom: 10px !important;
 }
-
 #hora{
     font-size: 2em !important;
     font-weight: bold !important;
