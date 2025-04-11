@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/73fcefcd98.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../styless/header.css">
+    <title>Header</title>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo"><a href="http://localhost/workspace/index.html"><img src="../img/banfanb.png" alt="80px" height="80px"></div>
+            <ul class="links">
+                <li>
+                    <a href="..//index.html">Inicio</a>
+                </li>
+                <li class="menu">
+                    <a href="#">Meses</a>
+                    <ul class="submenu">
+                        <li><a href="../meses/enero.html">Enero</a></li>
+                        <li><a href="../meses/febrero.html"">Febrero</a></li>
+                        <li><a href="../meses/marzo.html">Marzo</a></li>
+                        <li><a href="../meses/abril.html">Abril</a></li>
+                        <li><a href="../meses/mayo.html">Mayo</a></li>
+                        <li><a href="../meses/junio.html">Junio</a></li>
+                        <li><a href="../meses/julio.html">Julio</a></li>
+                        <li><a href="../meses/agosto.html">Agosto</a></li>
+                        <li><a href="../meses/septiembre.html">Septiembre</a></li>
+                        <li><a href="../meses/octubre.html">Octubre</a></li>
+                        <li><a href="../meses/noviembre.html">Noviembre</a></li>
+                        <li><a href="../meses/diciembre.html">Diciembre</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <a href="#" class="action_btn">Inicio de Sesión</a>
+            <div class="toggle_btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <div class="dropdown_menu">
+                <li><a href="http://localhost/workspace/index.html">Inicio</a></li>
+                <li><a href="#" class="action_btn">Inicio de Sesión</a></li>
+            </div>
+        </div>
+    </header>   
+    <h1>Agencias Caídas</h1>
+    <h1>Reporte Marzo</h1>
+
+    <div class="reloj">
+        <div id="fecha"></div>
+        <div id="hora"></div>
+    </div>
+
+    <h2>Semana 1</h2>
+
+    <canvas id="myChart" width="200" height="100"></canvas>
+    
+
+    <script src="../src/reloj.js"></script>    
+    <script>
+        // Ruta del archivo Excel en el servidor
+        const excelFilePath = 'http://localhost/workspace/Libro1.xlsx';
+
+        // Función para cargar y procesar el archivo Excel
+        function loadExcelFile() {
+            fetch(excelFilePath)
+                .then(response => response.arrayBuffer())
+                .then(data => {
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const sheetName = workbook.SheetNames[0]; // Usar la primera hoja
+                    const sheet = workbook.Sheets[sheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(sheet); // Convertir a JSON
+
+                    console.log(jsonData); // Verifica los datos en la consola
+
+                    // Procesar los datos del Excel
+                    const labels = [];
+                    const values = [];
+
+                    jsonData.forEach(row => {
+                        if (row['AGENCIAS'] && row['Marzo %']) { // Verifica que las columnas existan
+                            labels.push(row['AGENCIAS']);
+                            // Convierte el valor de 'Marzo %' a porcentaje
+                            const porcentaje = parseFloat(row['Marzo %']) * 100; // Multiplica por 100
+                            values.push(porcentaje.toFixed(2)); // Redondea a 2 decimales
+                        }
+                    });
+
+                    // Generar el gráfico
+                    const ctx = document.getElementById('myChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar', // Cambia a 'pie', 'line', etc., según el tipo de gráfico
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Marzo %',
+                                data: values,
+                                backgroundColor: ['#c40a02', '#0e235c', '#111111',  '#336699', '#990000', '111111'],
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                            },
+                            scales: {
+                                y: {
+                                    ticks: {
+                                        callback: function(value) {
+                                            return value + '%'; // Agrega el símbolo % en el eje Y
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error al cargar el archivo Excel:', error));
+        }
+
+        // Cargar el archivo Excel al cargar la página
+        loadExcelFile();
+
+    </script>
+    <script>
+        const toggleBtn = document.querySelector('.toggle_btn');
+        const toggleBtnIcon = document.querySelector('.toggle_btn i');
+        const dropDownMenu = document.querySelector('.dropdown_menu'); // Cambiado a .dropdown_menu
+
+        toggleBtn.onclick = function () {
+            dropDownMenu.classList.toggle('open'); // Alterna la clase 'open'
+            const isOpen = dropDownMenu.classList.contains('open');
+            toggleBtnIcon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'; // Cambia el icono
+        };
+    </script>
+
+    <script>
+        document.querySelector('.menu').addEventListener('click', function (e) {
+            e.preventDefault(); // Evita el comportamiento predeterminado del enlace
+            const submenu = this.querySelector('.submenu');
+            submenu.classList.toggle('active'); // Alterna la clase 'active'
+        });
+
+        // Asegúrate de que el submenú esté visible cuando tenga la clase 'active'
+        const submenuCSS = document.createElement('style');
+        submenuCSS.innerHTML = `
+            .submenu.active {
+                display: block !important;
+            }
+        `;
+        document.head.appendChild(submenuCSS);
+    </script>
+
+    <script src="../src/charts.js"></script>
+    
+</body>
+</html>
