@@ -35,7 +35,7 @@ function loadExcelFile() {
                     datasets: [{
                         label: 'CAIDAS DIARIAS',
                         data: values,
-                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                        backgroundColor: ['#c40a02', '#133070', '#111111'],
                     }]
                 },
                 options: {

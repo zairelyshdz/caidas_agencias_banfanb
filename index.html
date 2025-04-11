@@ -12,10 +12,28 @@
 <body>
     <header>
         <div class="navbar">
-            <div class="logo"><a href="http://localhost/workspace/index.html"><img src="img/banfanb-logo.png" alt="80px" height="80px"></div>
+            <div class="logo"><a href="http://localhost/workspace/index.html"><img src="img/banfanb.png" alt="80px" height="80px"></div>
             <ul class="links">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="meses/">Meses</a></li>
+                <li>
+                    <a href="index.html">Inicio</a>
+                </li>
+                <li class="menu">
+                    <a href="#">Meses</a>
+                    <ul class="submenu">
+                        <li><a href="meses/enero.html">Enero</a></li>
+                        <li><a href="meses/febrero.html">Febrero</a></li>
+                        <li><a href="meses/marzo.html">Marzo</a></li>
+                        <li><a href="meses/abril.html">Abril</a></li>
+                        <li><a href="meses/mayo.html">Mayo</a></li>
+                        <li><a href="meses/junio.html">Junio</a></li>
+                        <li><a href="meses/julio.html">Julio</a></li>
+                        <li><a href="meses/agosto.html">Agosto</a></li>
+                        <li><a href="meses/septiembre.html">Septiembre</a></li>
+                        <li><a href="meses/octubre.html">Octubre</a></li>
+                        <li><a href="meses/noviembre.html">Noviembre</a></li>
+                        <li><a href="meses/diciembre.html">Diciembre</a></li>
+                    </ul>
+                </li>
             </ul>
             <a href="#" class="action_btn">Inicio de Sesión</a>
             <div class="toggle_btn">
@@ -31,10 +49,16 @@
     </header>   
     <h1>Agencias Caídas</h1>
 
-    <canvas id="myChart" width="200" height="100"></canvas>
-    <canvas id="mySecondChart" width="200" height="100"></canvas>
+    <div class="reloj">
+        <div id="fecha"></div>
+        <div id="hora"></div>
+    </div>
 
+    <canvas id="mySecondChart" width="200" height="100"></canvas>
+    <canvas id="myChart" width="200" height="100"></canvas>
     
+
+    <script src="src/reloj.js"></script>    
     <script>
         // Ruta del archivo Excel en el servidor
         const excelFilePath = 'http://localhost/workspace/Libro1.xlsx';
@@ -73,7 +97,7 @@
                             datasets: [{
                                 label: 'Marzo %',
                                 data: values,
-                                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                                backgroundColor: ['#c40a02', '#0e235c', '#111111',  '#336699', '#990000', '111111'],
                             }]
                         },
                         options: {
@@ -112,6 +136,23 @@
             const isOpen = dropDownMenu.classList.contains('open');
             toggleBtnIcon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'; // Cambia el icono
         };
+    </script>
+
+    <script>
+        document.querySelector('.menu').addEventListener('click', function (e) {
+            e.preventDefault(); // Evita el comportamiento predeterminado del enlace
+            const submenu = this.querySelector('.submenu');
+            submenu.classList.toggle('active'); // Alterna la clase 'active'
+        });
+
+        // Asegúrate de que el submenú esté visible cuando tenga la clase 'active'
+        const submenuCSS = document.createElement('style');
+        submenuCSS.innerHTML = `
+            .submenu.active {
+                display: block !important;
+            }
+        `;
+        document.head.appendChild(submenuCSS);
     </script>
 
     <script src="src/charts.js"></script>

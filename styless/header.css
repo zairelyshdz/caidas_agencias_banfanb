@@ -6,20 +6,30 @@
     background-color: #efedef;
 }
 
+body{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin:0;
+}
+
 h1{
     text-align: center;
     margin: 20px 0;
     font-size: 30px;
+    color: #111;
     
 }
 
 li{
     list-style: none;
+    background: none!important;
+    text-decoration: none!important;
 }
 
 a{
     text-decoration: none;
-    color: #550000;
+    color: #642828;
     font-size: 1rem;
 }
 
@@ -30,7 +40,7 @@ a:hover{
 header{
     position: relative;
     padding: 0 2rem;
-    background-color: #550000;
+    background-color: #c40a02;
     backdrop-filter: blur(20px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -43,7 +53,7 @@ header{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #550000;
+    background-color: #c40a02;
     backdrop-filter: blur(15px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -52,24 +62,31 @@ header{
     font-size: 1.5rem;
     font-weight: bold;
     display: block;
-    background: none; /* Elimina cualquier fondo */
+    background: none;
 }
 
 .navbar .logo img {
-    background: none; /* Asegúrate de que la imagen no tenga fondo */
-    display: block; /* Asegura que la imagen no tenga márgenes extra */
+    background: none; 
+    display: block; 
 }
 
 .navbar .links{
+    background: none;
+    text-decoration: none;
+    box-shadow: none; 
     display: flex;
     gap: 2rem;
-    background: #550000;
+    background: #c40a02;
+    font-weight: bold;
 }
 
 .navbar .links a {
-    background: none; /* Elimina cualquier fondo */
-    color: #550000; /* Asegúrate de que el texto sea visible */
-    padding: 0; /* Elimina cualquier relleno extra */
+    background: none;
+    text-decoration: none;
+    box-shadow: none; 
+    color: #efedef; 
+    padding: 0; 
+    font-weight: bold;
 }
 
 .navbar .toggle_btn{
@@ -89,7 +106,7 @@ header{
 
 .action_btn{
     background-color: #efedef;
-    color:#550000;
+    color:#c40a02;
     padding: 0.5rem 1rem;
     border: none;
     outline: none;
@@ -106,6 +123,42 @@ header{
 
 .action_btn:active{
     scale: 0.95;
+}
+
+.menu {
+    position: relative;
+}
+
+.submenu {
+    display: none; /* Oculta el submenú por defecto */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #c40a02;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    min-width: 200px;
+    padding: 1rem;
+    list-style: none;
+    z-index: 1000;
+}
+
+.submenu li {
+    padding: 0.5rem 1rem;
+}
+
+.submenu li a {
+    color: #c40a02;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.submenu li a:hover {
+    color: #8f7777;
+}
+
+.menu:hover .submenu {
+    display: block; /* Muestra el submenú al pasar el mouse */
 }
 
 .dropdown_menu {
@@ -149,6 +202,11 @@ header{
         display: block; /* Muestra el botón de alternar */
     }
 
+    .submenu{
+        position: static;
+        box-shadow: none;
+    }
+    
     .dropdown_menu {
         display: none; /* Oculta el menú desplegable por defecto */
     }
@@ -170,8 +228,32 @@ header{
 
 }
 
+.reloj{
+    font-family: poppins, sans-serif;
+    background: none;
+    color: #111;
+    padding: 20px;
+    text-align: center;
+    align-content: center;
+    width: 300px;
+    margin: 0; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; 
+}
+
+#fecha{
+    font-size: 1.2em !important;
+    margin-bottom: 10px !important;
+}
+
+#hora{
+    font-size: 2em !important;
+    font-weight: bold !important;
+}
+
 canvas {
-    padding: 10%;
+    padding: 5%;
     width: 100% !important; 
     height: auto !important; 
 }
