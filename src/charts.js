@@ -33,7 +33,7 @@ function loadExcelFile() {
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'CAIDAS DIARIAS',
+                        label: 'CAÍDAS DIARIAS',
                         data: values,
                         backgroundColor: ['#c40a02', '#133070', '#111111'],
                     }]
