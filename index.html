@@ -56,15 +56,19 @@
 
     <canvas id="mySecondChart" width="200" height="100"></canvas>
 
+    <h1>Reporte Semanal (Total de Fallos)</h1>
+    <canvas id="weeklyChart" width="200" height="100"></canvas>
+
     <h1>Reporte Marzo</h1>
 
     <canvas id="myChart" width="200" height="100"></canvas>
     
 
+    <script src="src/weekly.js"></script>
     <script src="src/reloj.js"></script>    
     <script>
         // Ruta del archivo Excel en el servidor
-        const excelFilePath = 'http://localhost/workspace/Libro1.xlsx';
+        const excelFilePath = 'http://localhost/workspace/Libro1.xlsx?.nocache = $newDate().getTime()';
 
         // Función para cargar y procesar el archivo Excel
         function loadExcelFile() {
