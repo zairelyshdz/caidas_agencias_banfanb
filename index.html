@@ -20,7 +20,7 @@
                 <li class="menu">
                     <a href="#">Meses</a>
                     <ul class="submenu">
-                        <li><a href="..meses/enero.html">Enero</a></li>
+                        <li><a href="meses/enero.html">Enero</a></li>
                         <li><a href="meses/febrero.html">Febrero</a></li>
                         <li><a href="meses/marzo.html">Marzo</a></li>
                         <li><a href="meses/abril.html">Abril</a></li>
@@ -88,13 +88,13 @@
                     jsonData.forEach(row => {
                         if (row['AGENCIAS'] && row['Marzo %']) { // Verifica que las columnas existan
                             labels.push(row['AGENCIAS']);
-                            // Convierte el valor de 'Marzo %' a porcentaje
-                            const porcentaje = parseFloat(row['Marzo %']) * 100; // Multiplica por 100
+                            
+                            const porcentaje = parseFloat(row['Marzo %']) * 100; 
                             values.push(porcentaje.toFixed(2)); // Redondea a 2 decimales
                         }
                     });
 
-                    // Generar el gráfico
+                    // Genera el gráfico
                     const ctx = document.getElementById('myChart').getContext('2d');
                     new Chart(ctx, {
                         type: 'bar', // Cambia a 'pie', 'line', etc., según el tipo de gráfico
@@ -128,30 +128,30 @@
                 .catch(error => console.error('Error al cargar el archivo Excel:', error));
         }
 
-        // Cargar el archivo Excel al cargar la página
+        
         loadExcelFile();
 
     </script>
     <script>
         const toggleBtn = document.querySelector('.toggle_btn');
         const toggleBtnIcon = document.querySelector('.toggle_btn i');
-        const dropDownMenu = document.querySelector('.dropdown_menu'); // Cambiado a .dropdown_menu
+        const dropDownMenu = document.querySelector('.dropdown_menu'); 
 
         toggleBtn.onclick = function () {
-            dropDownMenu.classList.toggle('open'); // Alterna la clase 'open'
+            dropDownMenu.classList.toggle('open'); 
             const isOpen = dropDownMenu.classList.contains('open');
-            toggleBtnIcon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'; // Cambia el icono
+            toggleBtnIcon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'; 
         };
     </script>
 
     <script>
         document.querySelector('.menu').addEventListener('click', function (e) {
-            e.preventDefault(); // Evita el comportamiento predeterminado del enlace
+            e.preventDefault(); // 
             const submenu = this.querySelector('.submenu');
-            submenu.classList.toggle('active'); // Alterna la clase 'active'
+            submenu.classList.toggle('active'); 
         });
 
-        // Asegúrate de que el submenú esté visible cuando tenga la clase 'active'
+
         const submenuCSS = document.createElement('style');
         submenuCSS.innerHTML = `
             .submenu.active {

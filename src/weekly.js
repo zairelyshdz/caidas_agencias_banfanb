@@ -1,27 +1,13 @@
-const excelFilePathThird = `http://localhost/workspace/Libro1.xlsx?nocache=${new Date().getTime()}`;
+const excelFilePathThird = 'http://localhost/workspace/Libro1.xlsx?.nocache = $newDate().getTime()';
 
 let weeklyChart;
 
-// Función para obtener el número de semana dentro del mes
+// para obtener el número de semana dentro del mes
 function getWeekNumberInMonth(date) {
     const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
     const dayOfMonth = date.getDate();
     const weekNumber = Math.ceil((dayOfMonth + firstDayOfMonth.getDay()) / 7);
     return weekNumber;
-}
-
-// Verifica si la fecha ess de la semana actual
-function isCurrentWeek(date) {
-    const today = new Date();
-    const currentWeek = getWeekNumberInMonth(today);
-    const currentMonth = today.getMonth();
-    const currentYear = today.getFullYear();
-
-    return (
-        date.getFullYear() === currentYear &&
-        date.getMonth() === currentMonth &&
-        getWeekNumberInMonth(date) === currentWeek
-    );
 }
 
 // Procesar datos diarios y agruparlos por semana dentro del mes
@@ -31,19 +17,15 @@ function processWeeklyData(sheetData) {
     sheetData.forEach(row => {
         if (row.FECHA && row.AGENCIAS && row['TOTAL DE FALLAS']) {
             const fecha = new Date(row.FECHA.split('/').reverse().join('-'));
+            const weekNumber = getWeekNumberInMonth(fecha);
+            const monthName = fecha.toLocaleString('es-ES', { month: 'long' });
 
-            // Filtrar solo los datos de la semana actual
-            if (isCurrentWeek(fecha)) {
-                const weekNumber = getWeekNumberInMonth(fecha);
-                const monthName = fecha.toLocaleString('es-ES', { month: 'long' });
+            const key = `Semana ${weekNumber} de ${monthName}`;
 
-                const key = `Semana ${weekNumber} de ${monthName}`;
-
-                if (!weeklyCounts[key]) {
-                    weeklyCounts[key] = 0;
-                }
-                weeklyCounts[key] += parseInt(row['TOTAL DE FALLAS'], 10); // Sumar las fallas
+            if (!weeklyCounts[key]) {
+                weeklyCounts[key] = 0;
             }
+            weeklyCounts[key]++; // Cuenta TODOS los fallos por semana
         }
     });
 
@@ -80,11 +62,11 @@ function createWeeklyChart({ labels, data }) {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Total de Fallos Semanales (Semana Actual)',
+                label: 'Total de Fallos Semanales',
                 data: data,
-                backgroundColor: '#0e235c',
                 borderColor: '#0e235c',
-                borderWidth: 1
+                fill: false,
+                tension: 0.1
             }]
         },
         options: {
