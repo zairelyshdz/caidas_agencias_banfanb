@@ -7,7 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="echarts.js"></script>
     <link rel="stylesheet" href="../styless/header.css">
-    <title>Header</title>
+    <title>Reporte Abril</title>
 </head>
 <body>
     <header>
@@ -47,7 +47,7 @@
         </div>
     </header>   
     <h1>Agencias Caídas</h1>
-    <h1>Reporte Marzo</h1>
+    <h1>Reporte Abril</h1>
 
     <div class="reloj">
         <div id="fecha"></div>
@@ -58,7 +58,6 @@
 
     <canvas id="myChart" width="200" height="100"></canvas>
 
-    <div id="main" style="width: 600px;height:400px;"></div>
     
 
     <script src="../src/reloj.js"></script>    
@@ -90,39 +89,10 @@
                             values.push(porcentaje.toFixed(2)); // Redondea a 2 decimales
                         }
                     });
-
+                });
+            }
         // Cargar el archivo Excel al cargar la página
         loadExcelFile();
-    </script>
-
-    <script type="text/javascript">
-      // Initialize the echarts instance based on the prepared dom
-      var myChart = echarts.init(document.getElementById('main'));
-
-      // Specify the configuration items and data for the chart
-      var option = {
-        title: {
-          text: 'ECharts Getting Started Example'
-        },
-        tooltip: {},
-        legend: {
-          data: ['sales']
-        },
-        xAxis: {
-          data: ['Shirts', 'Cardigans', 'Chiffons', 'Pants', 'Heels', 'Socks']
-        },
-        yAxis: {},
-        series: [
-          {
-            name: 'sales',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-          }
-        ]
-      };
-
-      // Display the chart using the configuration items and data just specified.
-      myChart.setOption(option);
     </script>
 
     <script>

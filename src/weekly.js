@@ -10,6 +10,20 @@ function getWeekNumberInMonth(date) {
     return weekNumber;
 }
 
+// Verifica si la fecha pertenece a la semana actual
+function isCurrentWeek(date) {
+    const currentDate = new Date();
+    const currentWeekNumber = getWeekNumberInMonth(currentDate);
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+
+    const dateWeekNumber = getWeekNumberInMonth(date);
+    const dateMonth = date.getMonth();
+    const dateYear = date.getFullYear();
+
+    return currentWeekNumber === dateWeekNumber && currentMonth === dateMonth && currentYear === dateYear;
+}
+
 // Procesar datos diarios y agruparlos por semana dentro del mes
 function processWeeklyData(sheetData) {
     const weeklyCounts = {};
@@ -17,22 +31,21 @@ function processWeeklyData(sheetData) {
     sheetData.forEach(row => {
         if (row.FECHA && row.AGENCIAS && row['TOTAL DE FALLAS']) {
             const fecha = new Date(row.FECHA.split('/').reverse().join('-'));
-            const weekNumber = getWeekNumberInMonth(fecha);
-            const monthName = fecha.toLocaleString('es-ES', { month: 'long' });
 
-            const key = `Semana ${weekNumber} de ${monthName}`;
+            if (isCurrentWeek(fecha)) {
+                const weekNumber = getWeekNumberInMonth(fecha);
+                const monthName = fecha.toLocaleString('es-ES', { month: 'long' });
 
-            if (!weeklyCounts[key]) {
-                weeklyCounts[key] = 0;
+                const key = `Semana ${weekNumber} de ${monthName}`;
+
+                if (!weeklyCounts[key]) {
+                    weeklyCounts[key] = 0;
+                }
+                weeklyCounts[key] += parseInt(row['TOTAL DE FALLAS'], 10);
             }
-            weeklyCounts[key]++; // Cuenta TODOS los fallos por semana
         }
     });
-
-    return {
-        labels: Object.keys(weeklyCounts),
-        data: Object.values(weeklyCounts)
-    };
+    return weeklyCounts;
 }
 
 // Función principal para cargar ambas hojas
