@@ -77,9 +77,9 @@
                     const workbook = XLSX.read(data, { type: 'array' });
                     const sheetName = workbook.SheetNames[0]; // Usar la primera hoja
                     const sheet = workbook.Sheets[sheetName];
-                    const jsonData = XLSX.utils.sheet_to_json(sheet); // Convertir a JSON
+                    const jsonData = XLSX.utils.sheet_to_json(sheet); 
 
-                    console.log(jsonData); // Verifica los datos en la consola
+                    console.log(jsonData); 
 
                     // Procesar los datos del Excel
                     const labels = [];
@@ -90,7 +90,7 @@
                             labels.push(row['AGENCIAS']);
                             
                             const porcentaje = parseFloat(row['Marzo %']) * 100; 
-                            values.push(porcentaje.toFixed(2)); // Redondea a 2 decimales
+                            values.push(porcentaje.toFixed(2)); 
                         }
                     });
 
