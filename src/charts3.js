@@ -8,27 +8,27 @@ const myThirdChart = new Chart(ctx, {
             {
                 label: 'Sede A',
                 data: [2, 4, 0, 0, 3, 1, 6, 10, 4, 7, 0, 1],
-                backgroundColor: '#c40a02',
+                backgroundColor: '#162f5a',
             },
             {
                 label: 'Sede B',
                 data: [0, 2, 5, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-                backgroundColor: '#0e235c',
+                backgroundColor: '#064b73',
             },
             {
                 label: 'Sede C',
                 data: [15, 3, 0, 20, 2, 8, 1, 1, 0, 4, 7, 7],
-                backgroundColor: '#111111',
+                backgroundColor: '#0838a8',
             },
             {
                 label: 'Sede D',
                 data: [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
-                backgroundColor: '#336699',
+                backgroundColor: '#1389e0',
             },
             {
                 label: 'Sede E',
                 data: [12, 25, 20, 15, 10, 0, 9, 5, 2, 1, 3, 4],
-                backgroundColor: '#990000',
+                backgroundColor: '#7593ba',
             },
         ]
     },
