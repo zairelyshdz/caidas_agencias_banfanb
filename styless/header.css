@@ -33,7 +33,7 @@ a{
 }
 
 a:hover{
-    color: #0838a8;
+    color: #7593ba;
 }
 
 header{
@@ -117,7 +117,7 @@ header{
 }
 .action_btn:hover{
     scale: 1.05;
-    color: #0838a8;
+    color: #7593ba;
 }
 
 .action_btn:active{
@@ -153,7 +153,7 @@ header{
 }
 
 .submenu li a:hover {
-    color: #0838a8;
+    color: #7593ba;
 }
 
 .menu:hover .submenu {

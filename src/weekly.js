@@ -1,4 +1,4 @@
-const excelFilePathThird = 'http://localhost/workspace/Libro1.xlsx?.nocache = $newDate().getTime()';
+//const excelFilePathThird = 'http://localhost/workspace/Libro1.xlsx?.nocache = $newDate().getTime()';
 
 let weeklyChart;
 
@@ -62,9 +62,9 @@ function loadExcelFile() {
             // Generar gráfico semanal
             const weeklyData = processWeeklyData(dailyJson);
             createWeeklyChart(weeklyData);
-        })
-        .catch(error => console.error('Error:', error));
-}
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
 // Función para crear gráfico SEMANAL
 function createWeeklyChart({ labels, data }) {
