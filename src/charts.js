@@ -3,18 +3,17 @@ const excelFilePathSecond = 'http://localhost/workspace/Libro1.xlsx?.nocache = $
 
 // Función para cargar y procesar el archivo Excel
 function loadExcelFile() {
-    fetch(excelFilePath)
+    fetch(excelFilePathSecond)
         .then(response => response.arrayBuffer())
         .then(data => {
             const workbook = XLSX.read(data, { type: 'array' });
 
-            // Accede al nombre de la segunda hoja
+            
             const sheetName = workbook.SheetNames[1]; // Índice 1 corresponde a la segunda hoja
             const sheet = workbook.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(sheet); // Convertir a JSON
+            const jsonData = XLSX.utils.sheet_to_json(sheet); 
 
-            console.log(jsonData); // Verifica los datos en la consola
-
+            console.log(jsonData); 
             // Procesar los datos del Excel
             const labels = [];
             const values = [];
