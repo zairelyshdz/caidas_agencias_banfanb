@@ -8,12 +8,12 @@ function loadExcelFile() {
         .then(data => {
             const workbook = XLSX.read(data, { type: 'array' });
 
-            // Accede al nombre de la segunda hoja
+            
             const sheetName = workbook.SheetNames[1]; // Índice 1 corresponde a la segunda hoja
             const sheet = workbook.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(sheet); // Convertir a JSON
+            const jsonData = XLSX.utils.sheet_to_json(sheet); 
 
-            console.log(jsonData); // Verifica los datos en la consola
+            console.log(jsonData); 
 
             // Procesar los datos del Excel
             const labels = [];
@@ -35,7 +35,7 @@ function loadExcelFile() {
                     datasets: [{
                         label: 'CAÍDAS DIARIAS',
                         data: values,
-                        backgroundColor: ['#13346a', '#0838a8', '#7593ba'],
+                        backgroundColor: ['#13346a', '#014ba0','#0838a8','#7593ba', '#96b3ff'],
                     }]
                 },
                 options: {
@@ -51,7 +51,9 @@ function loadExcelFile() {
                                 callback: function(value) {
                                     return value; // Devuelve el valor tal cual
                                 }
-                            }
+                            },
+                            beginAtZero: true,
+                            max: 20,
                         }
                     }
                 }

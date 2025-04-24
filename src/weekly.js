@@ -1,4 +1,4 @@
-const excelFilePathThird = 'http://localhost/workspace/Libro1.xlsx?.nocache = $newDate().getTime()';
+const excelFilePathThird = 'http://localhost/workspace/Libro1.xlsx?.nocache=' + new Date().getTime();
 
 let weeklyChart;
 
@@ -48,7 +48,24 @@ function processWeeklyData(sheetData) {
     return weeklyCounts;
 }
 
-// Función principal para cargar ambas hojas
+// Procesa los datos del Excel y los refleja por día
+function processDailyData(sheetData) {
+    const dailyCounts = {
+        labels: [], 
+        data: []    
+    };
+
+    sheetData.forEach(row => {
+        if (row.Días && row['Fallos']) {
+            dailyCounts.labels.push(row.Días); 
+            dailyCounts.data.push(parseInt(row['Fallos'], 10) || 0); 
+        }
+    });
+
+    return dailyCounts;
+}
+
+// Función principal para cargar el archivo Excel
 function loadExcelFile() {
     fetch(excelFilePathThird)
         .then(response => response.arrayBuffer())
@@ -56,30 +73,28 @@ function loadExcelFile() {
             const workbook = XLSX.read(data, { type: 'array' });
 
             // Procesar Hoja1 (Datos diarios)
-            const dailySheet = workbook.Sheets[workbook.SheetNames[2]];
+            const dailySheet = workbook.Sheets[workbook.SheetNames[2]]; // Asegúrate de usar la hoja correcta
             const dailyJson = XLSX.utils.sheet_to_json(dailySheet);
 
-            // Generar gráfico semanal
-            const weeklyData = processWeeklyData(dailyJson);
-            createWeeklyChart(weeklyData);
-                })
-                .catch(error => console.error('Error:', error));
-        }
+            // Generar gráfico diario
+            const dailyData = processDailyData(dailyJson);
+            createDailyChart(dailyData);
+        })
+        .catch(error => console.error('Error al cargar el archivo Excel:', error));
+}
 
-// Función para crear gráfico SEMANAL
-function createWeeklyChart({ labels, data }) {
+// Función para crear gráfico DIARIO
+function createDailyChart({ labels, data }) {
     const ctx = document.getElementById('weeklyChart').getContext('2d');
     if (weeklyChart) weeklyChart.destroy();
     weeklyChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: labels,
+            labels: labels, // Días de la semana
             datasets: [{
-                label: 'Total de Fallos Semanales',
-                data: data,
-                borderColor: '#0e235c',
-                fill: false,
-                tension: 0.1
+                label: 'Fallos por Día',
+                data: data, // Fallos correspondientes
+                backgroundColor: ['#13346a', '#0838a8', '#7593ba'],
             }]
         },
         options: {
@@ -88,7 +103,8 @@ function createWeeklyChart({ labels, data }) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    title: { display: true, text: 'Número de Fallos' }
+                    title: { display: true, text: 'Número de Fallos' },
+                    max: 20, 
                 }
             }
         }
