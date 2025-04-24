@@ -39,7 +39,7 @@ function processWeeklyData(sheetData) {
                 const key = `Semana ${weekNumber} de ${monthName}`;
 
                 if (!weeklyCounts[key]) {
-                    weeklyCounts[key] = 0;
+                    weeklyCounts[key] = 0; 
                 }
                 weeklyCounts[key] += parseInt(row['Fallos'], 10);
             }
