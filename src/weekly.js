@@ -48,16 +48,16 @@ function processWeeklyData(sheetData) {
     return weeklyCounts;
 }
 
-// Procesa los datos del Excel y los refleja por día
+// Procesar datos diarios y mostrar los fallos por día
 function processDailyData(sheetData) {
     const dailyCounts = {
-        labels: [], 
-        data: []    
+        labels: [], // Días de la semana
+        data: []    // Fallos correspondientes
     };
 
     sheetData.forEach(row => {
-        if (row.Días && row['Fallos']) {
-            dailyCounts.labels.push(row.Días); 
+        if (row.Días && row['Fallos']) { 
+            dailyCounts.labels.push(row.Días); // Agrega el día (Lunes, Martes, etc.)
             dailyCounts.data.push(parseInt(row['Fallos'], 10) || 0); 
         }
     });
@@ -73,8 +73,10 @@ function loadExcelFile() {
             const workbook = XLSX.read(data, { type: 'array' });
 
             // Procesar Hoja1 (Datos diarios)
-            const dailySheet = workbook.Sheets[workbook.SheetNames[2]]; // Asegúrate de usar la hoja correcta
+            const dailySheet = workbook.Sheets[workbook.SheetNames[2]]; 
             const dailyJson = XLSX.utils.sheet_to_json(dailySheet);
+
+            console.log('Datos cargados del Excel:', dailyJson); 
 
             // Generar gráfico diario
             const dailyData = processDailyData(dailyJson);
@@ -94,7 +96,7 @@ function createDailyChart({ labels, data }) {
             datasets: [{
                 label: 'Fallos por Día',
                 data: data, // Fallos correspondientes
-                backgroundColor: ['#13346a', '#0838a8', '#7593ba'],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
             }]
         },
         options: {
@@ -103,8 +105,7 @@ function createDailyChart({ labels, data }) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    title: { display: true, text: 'Número de Fallos' },
-                    max: 20, 
+                    title: { display: true, text: 'Número de Fallos' }
                 }
             }
         }
