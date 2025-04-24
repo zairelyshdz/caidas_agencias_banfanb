@@ -1,4 +1,4 @@
-const excelFilePathThird = 'http://localhost/workspace/Libro1.xlsx?.nocache=' + new Date().getTime();
+const excelFilePathThird = 'http://localhost/workspace/Libro1.xlsx?.nocache = $newDate().getTime()';
 
 let weeklyChart;
 
@@ -10,20 +10,76 @@ function getWeekNumberInMonth(date) {
     return weekNumber;
 }
 
+// Verifica si la fecha pertenece a la semana actual
+function isCurrentWeek(date) {
+    const currentDate = new Date();
+    const currentWeekNumber = getWeekNumberInMonth(currentDate);
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+
+    const dateWeekNumber = getWeekNumberInMonth(date);
+    const dateMonth = date.getMonth();
+    const dateYear = date.getFullYear();
+
+    return currentWeekNumber === dateWeekNumber && currentMonth === dateMonth && currentYear === dateYear;
+}
+
+// Procesar datos diarios y agruparlos por semana dentro del mes
+function processWeeklyData(sheetData) {
+    const weeklyCounts = {};
+
+    sheetData.forEach(row => {
+        if (row.Días && row['Fallos']) {
+            const fecha = new Date(row.Días.split('/').reverse().join('-'));
+
+            if (isCurrentWeek(fecha)) {
+                const weekNumber = getWeekNumberInMonth(fecha);
+                const monthName = fecha.toLocaleString('es-ES', { month: 'long' });
+
+                const key = `Semana ${weekNumber} de ${monthName}`;
+
+                if (!weeklyCounts[key]) {
+                    weeklyCounts[key] = 0;
+                }
+                weeklyCounts[key] += parseInt(row['Fallos'], 10);
+            }
+        }
+    });
+    return weeklyCounts;
+}
+
+// Función principal para cargar ambas hojas
+function loadExcelFile() {
+    fetch(excelFilePathThird)
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            const workbook = XLSX.read(data, { type: 'array' });
+
+            // Procesar Hoja1 (Datos diarios)
+            const dailySheet = workbook.Sheets[workbook.SheetNames[2]];
+            const dailyJson = XLSX.utils.sheet_to_json(dailySheet);
+
+            // Generar gráfico semanal
+            const weeklyData = processWeeklyData(dailyJson);
+            createWeeklyChart(weeklyData);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
 // Función para crear gráfico SEMANAL
-function createWeeklyChart(weeklyData) {
+function createWeeklyChart({ labels, data }) {
     const ctx = document.getElementById('weeklyChart').getContext('2d');
     if (weeklyChart) weeklyChart.destroy();
     weeklyChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: weeklyData.labels,
+            labels: labels,
             datasets: [{
                 label: 'Total de Fallos Semanales',
-                data: weeklyData.data,
-                backgroundColor: '#0e235c',
+                data: data,
                 borderColor: '#0e235c',
-                borderWidth: 1
+                fill: false,
+                tension: 0.1
             }]
         },
         options: {
@@ -37,44 +93,6 @@ function createWeeklyChart(weeklyData) {
             }
         }
     });
-}
-
-// Función principal para cargar el archivo Excel
-function loadExcelFile() {
-    fetch(excelFilePathThird)
-        .then(response => response.arrayBuffer())
-        .then(data => {
-            const workbook = XLSX.read(data, { type: 'array' });
-
-            // Seleccionar la hoja correspondiente
-            const sheetName = workbook.SheetNames[2]; // Índice 2 corresponde a la tercera hoja
-            const sheet = workbook.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(sheet);
-
-            console.log(jsonData); // Verifica los datos en la consola
-
-            // Procesar los datos del Excel
-            const labels = [];
-            const values = [];
-
-            jsonData.forEach(row => {
-                if (row['SEMANA-1']) { // Verifica que la columna 'SEMANA-1' exista
-                    const totalFallas = 
-                        (parseInt(row['Lunes']) || 0) +
-                        (parseInt(row['Martes']) || 0) +
-                        (parseInt(row['Miércoles']) || 0) +
-                        (parseInt(row['Jueves']) || 0) +
-                        (parseInt(row['Viernes']) || 0);
-
-                    labels.push(row['SEMANA-1']); 
-                    values.push(totalFallas);
-                }
-            });
-
-            // Generar el gráfico
-            createWeeklyChart({ labels, data: values });
-        })
-        .catch(error => console.error('Error al cargar el archivo Excel:', error));
 }
 
 // Cargar al iniciar

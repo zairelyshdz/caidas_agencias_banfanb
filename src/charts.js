@@ -8,12 +8,13 @@ function loadExcelFile() {
         .then(data => {
             const workbook = XLSX.read(data, { type: 'array' });
 
-            
+            // Accede al nombre de la segunda hoja
             const sheetName = workbook.SheetNames[1]; // Índice 1 corresponde a la segunda hoja
             const sheet = workbook.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(sheet); 
+            const jsonData = XLSX.utils.sheet_to_json(sheet); // Convertir a JSON
 
-            console.log(jsonData); 
+            console.log(jsonData); // Verifica los datos en la consola
+
             // Procesar los datos del Excel
             const labels = [];
             const values = [];
