@@ -1,5 +1,6 @@
 const excelFilePathThird = 'http://localhost/workspace/Libro1.xlsx?.nocache=' + new Date().getTime();
 
+let dailyChart;
 let weeklyChart;
 
 // para obtener el número de semana dentro del mes
@@ -24,13 +25,13 @@ function isCurrentWeek(date) {
     return currentWeekNumber === dateWeekNumber && currentMonth === dateMonth && currentYear === dateYear;
 }
 
-// Procesar datos diarios y agruparlos por semana dentro del mes
+// Procesar datos diarios 
 function processWeeklyData(sheetData) {
     const weeklyCounts = {};
 
     sheetData.forEach(row => {
-        if (row.Días && row['Fallos']) {
-            const fecha = new Date(row.Días.split('/').reverse().join('-'));
+        if (row.DIAS-4 && row['FALLOS-4']) {
+            const fecha = new Date(row.DIAS-4 .split('/').reverse().join('-'));
 
             if (isCurrentWeek(fecha)) {
                 const weekNumber = getWeekNumberInMonth(fecha);
@@ -41,7 +42,7 @@ function processWeeklyData(sheetData) {
                 if (!weeklyCounts[key]) {
                     weeklyCounts[key] = 0; 
                 }
-                weeklyCounts[key] += parseInt(row['Fallos'], 10);
+                weeklyCounts[key] += parseInt(row['FALLOS-4'], 10);
             }
         }
     });
@@ -56,9 +57,9 @@ function processDailyData(sheetData) {
     };
 
     sheetData.forEach(row => {
-        if (row.Días && row['Fallos']) { 
-            dailyCounts.labels.push(row.Días); // Agrega el día (Lunes, Martes, etc.)
-            dailyCounts.data.push(parseInt(row['Fallos'], 10) || 0); 
+        if (row['DIAS-4'] && row['FALLOS-4']) { 
+            dailyCounts.labels.push(row['DIAS-4']); 
+            dailyCounts.data.push(parseInt(row['FALLOS-4'], 10) || 0); 
         }
     });
 
@@ -72,11 +73,11 @@ function loadExcelFile() {
         .then(data => {
             const workbook = XLSX.read(data, { type: 'array' });
 
-            // Procesar Hoja1 (Datos diarios)
-            const dailySheet = workbook.Sheets[workbook.SheetNames[2]]; 
+            // Procesar Hoja3 (Datos diarios)
+            const dailySheet = workbook.Sheets[workbook.SheetNames[4]]; 
             const dailyJson = XLSX.utils.sheet_to_json(dailySheet);
 
-            console.log('Datos cargados del Excel:', dailyJson); 
+            console.log('Datos cargados del Excel:', dailyJson); // Verifica los datos en la consola
 
             // Generar gráfico diario
             const dailyData = processDailyData(dailyJson);
@@ -88,15 +89,15 @@ function loadExcelFile() {
 // Función para crear gráfico DIARIO
 function createDailyChart({ labels, data }) {
     const ctx = document.getElementById('weeklyChart').getContext('2d');
-    if (weeklyChart) weeklyChart.destroy();
-    weeklyChart = new Chart(ctx, {
+    if (dailyChart) dailyChart.destroy();
+    dailyChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels, // Días de la semana
             datasets: [{
                 label: 'Fallos por Día',
                 data: data, // Fallos correspondientes
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+                backgroundColor: ['#13346a', '#014ba0','#0838a8','#7593ba', '#96b3ff'],
             }]
         },
         options: {
@@ -105,7 +106,7 @@ function createDailyChart({ labels, data }) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    title: { display: true, text: 'Número de Fallos' }
+                    max:20,
                 }
             }
         }

@@ -20,18 +20,18 @@
                 <li class="menu">
                     <a href="#">Meses</a>
                     <ul class="submenu">
-                        <li><a href="../meses/enero.html">Enero</a></li>
-                        <li><a href="../meses/febrero.html">Febrero</a></li>
-                        <li><a href="../meses/marzo.html">Marzo</a></li>
-                        <li><a href="../meses/abril.html">Abril</a></li>
-                        <li><a href="../meses/mayo.html">Mayo</a></li>
-                        <li><a href="../meses/junio.html">Junio</a></li>
-                        <li><a href="../meses/julio.html">Julio</a></li>
-                        <li><a href="../meses/agosto.html">Agosto</a></li>
-                        <li><a href="../meses/septiembre.html">Septiembre</a></li>
-                        <li><a href="../meses/octubre.html">Octubre</a></li>
-                        <li><a href="../meses/noviembre.html">Noviembre</a></li>
-                        <li><a href="../meses/diciembre.html">Diciembre</a></li>
+                        <li><a href="http://localhost/workspace/meses/enero.html">Enero</a></li>
+                        <li><a href="../workspace/meses/febrero.html">Febrero</a></li>
+                        <li><a href="../workspace/meses/marzo.html">Marzo</a></li>
+                        <li><a href="../workspace/meses/abril.html">Abril</a></li>
+                        <li><a href="../workspace/meses/mayo.html">Mayo</a></li>
+                        <li><a href="../workspace/meses/junio.html">Junio</a></li>
+                        <li><a href="../workspace/meses/julio.html">Julio</a></li>
+                        <li><a href="../workspace/meses/agosto.html">Agosto</a></li>
+                        <li><a href="../workspace/meses/septiembre.html">Septiembre</a></li>
+                        <li><a href="../workspace/meses/octubre.html">Octubre</a></li>
+                        <li><a href="../workspace/meses/noviembre.html">Noviembre</a></li>
+                        <li><a href="../workspace/meses/diciembre.html">Diciembre</a></li>
                     </ul>
                 </li>
             </ul>
@@ -75,7 +75,7 @@
                 .then(response => response.arrayBuffer())
                 .then(data => {
                     const workbook = XLSX.read(data, { type: 'array' });
-                    const sheetName = workbook.SheetNames[0]; // Usar la primera hoja
+                    const sheetName = workbook.SheetNames[3]; 
                     const sheet = workbook.Sheets[sheetName];
                     const jsonData = XLSX.utils.sheet_to_json(sheet); 
 

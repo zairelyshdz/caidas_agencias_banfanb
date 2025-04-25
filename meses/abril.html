@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/73fcefcd98.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="echarts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="../styless/header.css">
     <title>Reporte Abril</title>
 </head>
@@ -54,11 +54,13 @@
         <div id="hora"></div>
     </div>
 
-    <h2>Semana 1</h2>
+    <h2>Semana 4</h2>
 
     <canvas id="weeklyChart" width="200" height="100"></canvas>
 
-    
+    <h2>Reporte Mensual</h2>
+    <canvas id="march" width="200" height="100"></canvas>
+
 
     <script src="../src/reloj.js"></script>    
     <script src="../src/weekly.js"></script>
@@ -92,5 +94,73 @@
         document.head.appendChild(submenuCSS);
     </script>
     
+    <script>
+         // Ruta del archivo Excel en el servidor
+         const excelFilePathMarch = 'http://localhost/workspace/Libro1.xlsx?.nocache = $newDate().getTime()';
+
+// Función para cargar y procesar el archivo Excel
+function loadExcelFile() {
+    fetch(excelFilePathMarch)
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheetName = workbook.SheetNames[4]; 
+            const sheet = workbook.Sheets[sheetName];
+            const jsonData = XLSX.utils.sheet_to_json(sheet); 
+
+            console.log(jsonData); 
+
+            // Procesar los datos del Excel
+            const labels = [];
+            const values = [];
+
+            jsonData.forEach(row => {
+                if (row['AGENCIAS'] && row['Abril %']) { // Verifica que las columnas existan
+                    labels.push(row['AGENCIAS']);
+                    
+                    const porcentaje = parseFloat(row['Abril %']) * 100; 
+                    values.push(porcentaje.toFixed(2)); 
+                }
+            });
+
+            // Genera el gráfico
+            const ctx = document.getElementById('march').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar', // Cambia a 'pie', 'line', etc., según el tipo de gráfico
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Abril %',
+                        data: values,
+                        backgroundColor: ['#13346a', '#0838a8', '#7593ba'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%'; // Agrega el símbolo % en el eje Y
+                                }
+                            },
+                            beginAtZero: true,
+                            max: 100,
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error al cargar el archivo Excel:', error));
+}
+
+
+loadExcelFile();
+    </script>
 </body>
 </html>

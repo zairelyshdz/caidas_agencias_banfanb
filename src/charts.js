@@ -9,7 +9,7 @@ function loadExcelFile() {
             const workbook = XLSX.read(data, { type: 'array' });
 
             
-            const sheetName = workbook.SheetNames[1]; // Índice 1 corresponde a la segunda hoja
+            const sheetName = workbook.SheetNames[0]; // Índice 1 corresponde a la segunda hoja
             const sheet = workbook.Sheets[sheetName];
             const jsonData = XLSX.utils.sheet_to_json(sheet); 
 

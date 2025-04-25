@@ -12,10 +12,10 @@
 <body>
     <header>
         <div class="navbar">
-            <div class="logo"><a href="http://localhost/workspace/index.html"><img src="../img/banfanb-seeklogo.png" alt="80px" height="80px"></div>
+            <div class="logo"><a href="http://localhost/workspace/index.html"><img src="../img/banfanb.png" alt="80px" height="80px"></div>
             <ul class="links">
                 <li>
-                    <a href="index.html">Inicio</a>
+                    <a href="..//index.html">Inicio</a>
                 </li>
                 <li class="menu">
                     <a href="#">Meses</a>
@@ -46,10 +46,24 @@
             </div>
         </div>
     </header>   
+    <h1>Agencias Caídas</h1>
+    <h1>Reporte Enero</h1>
 
-    <div class="chart-container">
-        <canvas id="myThirdChart"></canvas>
+    <div class="reloj">
+        <div id="fecha"></div>
+        <div id="hora"></div>
     </div>
+
+    <h2>Semana 4</h2>
+
+    <canvas id="weeklyChart" width="200" height="100"></canvas>
+
+    <h2>Reporte Mensual</h2>
+    <canvas id="march" width="200" height="100"></canvas>
+
+
+    <script src="../src/reloj.js"></script>    
+    <script src="../src/weekly.js"></script>
 
     <script>
         const toggleBtn = document.querySelector('.toggle_btn');
@@ -57,20 +71,20 @@
         const dropDownMenu = document.querySelector('.dropdown_menu'); 
 
         toggleBtn.onclick = function () {
-            dropDownMenu.classList.toggle('open'); 
+            dropDownMenu.classList.toggle('open'); // Alterna la clase 'open'
             const isOpen = dropDownMenu.classList.contains('open');
-            toggleBtnIcon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'; 
+            toggleBtnIcon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
         };
     </script>
 
     <script>
         document.querySelector('.menu').addEventListener('click', function (e) {
-            e.preventDefault(); // 
+            e.preventDefault(); 
             const submenu = this.querySelector('.submenu');
-            submenu.classList.toggle('active'); 
+            submenu.classList.toggle('active'); // Alterna la clase 'active'
         });
 
-
+        // Asegura de que el submenú esté visible cuando tenga la clase 'active'
         const submenuCSS = document.createElement('style');
         submenuCSS.innerHTML = `
             .submenu.active {
@@ -79,7 +93,74 @@
         `;
         document.head.appendChild(submenuCSS);
     </script>
+    
+    <script>
+         // Ruta del archivo Excel en el servidor
+         const excelFilePathMarch = 'http://localhost/workspace/Libro1.xlsx?.nocache = $newDate().getTime()';
 
-      <script src="../src/charts3.js"></script>
+// Función para cargar y procesar el archivo Excel
+function loadExcelFile() {
+    fetch(excelFilePathMarch)
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheetName = workbook.SheetNames[4]; 
+            const sheet = workbook.Sheets[sheetName];
+            const jsonData = XLSX.utils.sheet_to_json(sheet); 
+
+            console.log(jsonData); 
+
+            // Procesar los datos del Excel
+            const labels = [];
+            const values = [];
+
+            jsonData.forEach(row => {
+                if (row['AGENCIAS'] && row['Enero %']) { // Verifica que las columnas existan
+                    labels.push(row['AGENCIAS']);
+                    
+                    const porcentaje = parseFloat(row['Enero %']) * 100; 
+                    values.push(porcentaje.toFixed(2)); 
+                }
+            });
+
+            // Genera el gráfico
+            const ctx = document.getElementById('march').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar', // Cambia a 'pie', 'line', etc., según el tipo de gráfico
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Abril %',
+                        data: values,
+                        backgroundColor: ['#13346a', '#0838a8', '#7593ba'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%'; // Agrega el símbolo % en el eje Y
+                                }
+                            },
+                            beginAtZero: true,
+                            max: 100,
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error al cargar el archivo Excel:', error));
+}
+
+
+loadExcelFile();
+    </script>
 </body>
 </html>
