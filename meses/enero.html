@@ -59,7 +59,7 @@
     <canvas id="weeklyChart" width="200" height="100"></canvas>
 
     <h2>Reporte Mensual</h2>
-    <canvas id="march" width="200" height="100"></canvas>
+    <canvas id="january" width="200" height="100"></canvas>
 
 
     <script src="../src/reloj.js"></script>    
@@ -96,15 +96,15 @@
     
     <script>
          // Ruta del archivo Excel en el servidor
-         const excelFilePathMarch = 'http://localhost/workspace/Libro1.xlsx?.nocache = $newDate().getTime()';
+         const excelFilePathJan = 'http://localhost/workspace/Libro1.xlsx?.nocache = $newDate().getTime()';
 
 // Función para cargar y procesar el archivo Excel
 function loadExcelFile() {
-    fetch(excelFilePathMarch)
+    fetch(excelFilePathJan)
         .then(response => response.arrayBuffer())
         .then(data => {
             const workbook = XLSX.read(data, { type: 'array' });
-            const sheetName = workbook.SheetNames[4]; 
+            const sheetName = workbook.SheetNames[1]; 
             const sheet = workbook.Sheets[sheetName];
             const jsonData = XLSX.utils.sheet_to_json(sheet); 
 
@@ -124,13 +124,13 @@ function loadExcelFile() {
             });
 
             // Genera el gráfico
-            const ctx = document.getElementById('march').getContext('2d');
+            const ctx = document.getElementById('january').getContext('2d');
             new Chart(ctx, {
                 type: 'bar', // Cambia a 'pie', 'line', etc., según el tipo de gráfico
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Abril %',
+                        label: 'Enero %',
                         data: values,
                         backgroundColor: ['#13346a', '#0838a8', '#7593ba'],
                     }]
@@ -160,7 +160,82 @@ function loadExcelFile() {
 }
 
 
+
 loadExcelFile();
-    </script>
+</script>
+
+<script>
+
+    let dailyChart;
+    let weeklyJanChart;
+
+// Procesar datos diarios 
+function processWeeklyData(sheetData) {
+const weeklyCounts = {};
+
+sheetData.forEach(row => {
+    if (row.DIAS-4 && row['FALLOS-4']) {
+        const fecha = new Date(row.DIAS-4 .split('/').reverse().join('-'));
+
+        if (isCurrentWeek(fecha)) {
+            const weekNumber = getWeekNumberInMonth(fecha);
+            const monthName = fecha.toLocaleString('es-ES', { month: 'long' });
+
+            const key = `Semana ${weekNumber} de ${monthName}`;
+
+            if (!weeklyCounts[key]) {
+                weeklyCounts[key] = 0; 
+            }
+            weeklyCounts[key] += parseInt(row['FALLOS-4'], 10);
+        }
+    }
+});
+return weeklyCounts;
+}
+
+// Procesar datos diarios y mostrar los fallos por día
+function processDailyData(sheetData) {
+const dailyCounts = {
+    labels: [], // Días de la semana
+    data: []    // Fallos correspondientes
+};
+
+sheetData.forEach(row => {
+    if (row['DIAS-4'] && row['FALLOS-4']) { 
+        dailyCounts.labels.push(row['DIAS-4']); 
+        dailyCounts.data.push(parseInt(row['FALLOS-4'], 10) || 0); 
+    }
+});
+
+return dailyCounts;
+}
+
+// Función para crear gráfico DIARIO
+function createDailyChart({ labels, data }) {
+const ctx = document.getElementById('weeklyChart').getContext('2d');
+if (dailyChart) dailyChart.destroy();
+dailyChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels, // Días de la semana
+        datasets: [{
+            label: 'Fallos por Día',
+            data: data, // Fallos correspondientes
+            backgroundColor: ['#13346a', '#014ba0','#0838a8','#7593ba', '#96b3ff'],
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { position: 'top' } },
+        scales: {
+            y: {
+                beginAtZero: true,
+                max:20,
+            }
+        }
+    }
+});
+}
+</script>
 </body>
 </html>

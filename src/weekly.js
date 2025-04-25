@@ -3,27 +3,6 @@ const excelFilePathThird = 'http://localhost/workspace/Libro1.xlsx?.nocache=' + 
 let dailyChart;
 let weeklyChart;
 
-// para obtener el número de semana dentro del mes
-function getWeekNumberInMonth(date) {
-    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-    const dayOfMonth = date.getDate();
-    const weekNumber = Math.ceil((dayOfMonth + firstDayOfMonth.getDay()) / 7);
-    return weekNumber;
-}
-
-// Verifica si la fecha pertenece a la semana actual
-function isCurrentWeek(date) {
-    const currentDate = new Date();
-    const currentWeekNumber = getWeekNumberInMonth(currentDate);
-    const currentMonth = currentDate.getMonth();
-    const currentYear = currentDate.getFullYear();
-
-    const dateWeekNumber = getWeekNumberInMonth(date);
-    const dateMonth = date.getMonth();
-    const dateYear = date.getFullYear();
-
-    return currentWeekNumber === dateWeekNumber && currentMonth === dateMonth && currentYear === dateYear;
-}
 
 // Procesar datos diarios 
 function processWeeklyData(sheetData) {
