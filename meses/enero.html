@@ -54,16 +54,27 @@
         <div id="hora"></div>
     </div>
 
-    <h2>Semana 4</h2>
+    <h2>Semana 1</h2>
+    <canvas id="weeklyJanChart" width="200" height="100"></canvas>
 
-    <canvas id="weeklyChart" width="200" height="100"></canvas>
+    <h2>Semana 2</h2>
+    <canvas id="weeklyYanChart" width="200" height="100"></canvas>
+
+    <h2>Semana 3</h2>
+    <canvas id="weeklyGenChart" width="200" height="100"></canvas>
+
+    <h2>Semana 4</h2>
+    <canvas id="weeklyLedChart" width="200" height="100"></canvas>
+
+    <h2>Semana 5 </h2>
+    <canvas id="weeklyGeneChart" width="200" height="100"></canvas>
 
     <h2>Reporte Mensual</h2>
     <canvas id="january" width="200" height="100"></canvas>
 
 
     <script src="../src/reloj.js"></script>    
-    <script src="../src/weekly.js"></script>
+    <!--<script src="../src/weeksjan.js"></script>-->
 
     <script>
         const toggleBtn = document.querySelector('.toggle_btn');
@@ -150,7 +161,7 @@ function loadExcelFile() {
                                 }
                             },
                             beginAtZero: true,
-                            max: 100,
+                            max: 80,
                         }
                     }
                 }
@@ -164,78 +175,85 @@ function loadExcelFile() {
 loadExcelFile();
 </script>
 
+
 <script>
+// Ruta del archivo Excel
+const excelFilePath = 'http://localhost/workspace/Libro1.xlsx?.nocache=' + new Date().getTime();
 
-    let dailyChart;
-    let weeklyJanChart;
+// Función para procesar datos diarios
+function processDailyData(sheetData, diasColumn, fallosColumn) {
+    const dailyCounts = {
+        labels: [], // Días de la semana
+        data: []    // Fallos correspondientes
+    };
 
-// Procesar datos diarios 
-function processWeeklyData(sheetData) {
-const weeklyCounts = {};
-
-sheetData.forEach(row => {
-    if (row.DIAS-4 && row['FALLOS-4']) {
-        const fecha = new Date(row.DIAS-4 .split('/').reverse().join('-'));
-
-        if (isCurrentWeek(fecha)) {
-            const weekNumber = getWeekNumberInMonth(fecha);
-            const monthName = fecha.toLocaleString('es-ES', { month: 'long' });
-
-            const key = `Semana ${weekNumber} de ${monthName}`;
-
-            if (!weeklyCounts[key]) {
-                weeklyCounts[key] = 0; 
-            }
-            weeklyCounts[key] += parseInt(row['FALLOS-4'], 10);
+    sheetData.forEach(row => {
+        if (row[diasColumn] && row[fallosColumn]) { // Usa las columnas especificadas
+            dailyCounts.labels.push(row[diasColumn]); 
+            dailyCounts.data.push(parseInt(row[fallosColumn], 10) || 0); 
         }
-    }
-});
-return weeklyCounts;
+    });
+
+    return dailyCounts;
 }
 
-// Procesar datos diarios y mostrar los fallos por día
-function processDailyData(sheetData) {
-const dailyCounts = {
-    labels: [], // Días de la semana
-    data: []    // Fallos correspondientes
-};
+// Función para cargar datos de una hoja específica y generar un gráfico
+function loadExcelFile(sheetIndex, diasColumn, fallosColumn, chartId, chartLabel) {
+    fetch(excelFilePath)
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            const workbook = XLSX.read(data, { type: 'array' });
 
-sheetData.forEach(row => {
-    if (row['DIAS-4'] && row['FALLOS-4']) { 
-        dailyCounts.labels.push(row['DIAS-4']); 
-        dailyCounts.data.push(parseInt(row['FALLOS-4'], 10) || 0); 
-    }
-});
+            // Selecciona la hoja por índice
+            const sheet = workbook.Sheets[workbook.SheetNames[1]];
+            const jsonData = XLSX.utils.sheet_to_json(sheet);
 
-return dailyCounts;
+            console.log(`Datos cargados de la hoja ${workbook.SheetNames[1]}:`, jsonData);
+
+            // Procesar los datos usando las columnas especificadas
+            const dailyData = processDailyData(jsonData, diasColumn, fallosColumn);
+
+            // Crear el gráfico
+            createDailyChart(dailyData, chartId, chartLabel);
+        })
+        .catch(error => console.error('Error al cargar el archivo Excel:', error));
 }
 
-// Función para crear gráfico DIARIO
-function createDailyChart({ labels, data }) {
-const ctx = document.getElementById('weeklyChart').getContext('2d');
-if (dailyChart) dailyChart.destroy();
-dailyChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: labels, // Días de la semana
-        datasets: [{
-            label: 'Fallos por Día',
-            data: data, // Fallos correspondientes
-            backgroundColor: ['#13346a', '#014ba0','#0838a8','#7593ba', '#96b3ff'],
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: { legend: { position: 'top' } },
-        scales: {
-            y: {
-                beginAtZero: true,
-                max:20,
+// Función para crear un gráfico
+function createDailyChart({ labels, data }, chartId, chartLabel) {
+    const ctx = document.getElementById(chartId).getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels, // Días de la semana
+            datasets: [{
+                label: chartLabel,
+                data: data, // Fallos correspondientes
+                backgroundColor: ['#13346a', '#014ba0', '#0838a8', '#7593ba', '#96b3ff'],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'top' } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 20,
+                }
             }
         }
-    }
-});
+    });
+
+    return chart;
 }
+
+// Cargar gráficos para diferentes columnas de la misma hoja
+loadExcelFile(1, 'DIAS-1', 'FALLOS-1', 'weeklyJanChart', 'Fallos Semana 1');
+loadExcelFile(1, 'DIAS-2', 'FALLOS-2', 'weeklyYanChart', 'Fallos Semana 2');
+loadExcelFile(1, 'DIAS-3', 'FALLOS-3', 'weeklyGenChart', 'Fallos Semana 3');
+loadExcelFile(1, 'DIAS-4', 'FALLOS-4', 'weeklyLedChart', 'Fallos Semana 4');
+loadExcelFile(1, 'DIAS-5', 'FALLOS-5', 'weeklyGeneChart', 'Fallos Semana 5');
 </script>
+
 </body>
 </html>
