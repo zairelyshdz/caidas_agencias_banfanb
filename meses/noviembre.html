@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/73fcefcd98.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../styless/header.css">
+    <title>Reporte noviembre</title>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo"><a href="http://localhost/workspace/index.html"><img src="../img/banfanb.png" alt="80px" height="80px"></div>
+            <ul class="links">
+                <li>
+                    <a href="..//index.html">Inicio</a>
+                </li>
+                <li class="menu">
+                    <a href="#">Meses</a>
+                    <ul class="submenu">
+                        <li><a href="../meses/enero.html">Enero</a></li>
+                        <li><a href="../meses/febrero.html">Febrero</a></li>
+                        <li><a href="../meses/marzo.html">Marzo</a></li>
+                        <li><a href="../meses/abril.html">Abril</a></li>
+                        <li><a href="../meses/mayo.html">Mayo</a></li>
+                        <li><a href="../meses/junio.html">Junio</a></li>
+                        <li><a href="../meses/julio.html">Julio</a></li>
+                        <li><a href="../meses/agosto.html">Agosto</a></li>
+                        <li><a href="../meses/septiembre.html">Septiembre</a></li>
+                        <li><a href="../meses/octubre.html">Octubre</a></li>
+                        <li><a href="../meses/noviembre.html">Noviembre</a></li>
+                        <li><a href="../meses/diciembre.html">Diciembre</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <a href="#" class="action_btn">Inicio de Sesión</a>
+            <div class="toggle_btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <div class="dropdown_menu">
+                <li><a href="http://localhost/workspace/index.html">Inicio</a></li>
+                <li><a href="#" class="action_btn">Inicio de Sesión</a></li>
+            </div>
+        </div>
+    </header>   
+    <h1>Agencias Caídas</h1>
+    <h1>Reporte noviembre</h1>
+
+    <div class="reloj">
+        <div id="fecha"></div>
+        <div id="hora"></div>
+    </div>
+
+    <h2>Semana 1</h2>
+    <canvas id="weeklyNovChart" width="200" height="100"></canvas>
+
+    <h2>Semana 2</h2>
+    <canvas id="weeklyNoyChart" width="200" height="100"></canvas>
+
+    <h2>Semana 3</h2>
+    <canvas id="weeklyGenChart" width="200" height="100"></canvas>
+
+    <h2>Semana 4</h2>
+    <canvas id="weeklyLisChart" width="200" height="100"></canvas>
+
+    <h2>Semana 5</h2>
+    <canvas id="weeklyMarrChart" width="200" height="100"></canvas>
+
+    <h2>Reporte Mensual</h2>
+    <canvas id="november" width="200" height="100"></canvas>
+
+
+    <script src="../src/reloj.js"></script>    
+    
+
+    <script>
+        const toggleBtn = document.querySelector('.toggle_btn');
+        const toggleBtnIcon = document.querySelector('.toggle_btn i');
+        const dropDownMenu = document.querySelector('.dropdown_menu'); 
+
+        toggleBtn.onclick = function () {
+            dropDownMenu.classList.toggle('open'); // Alterna la clase 'open'
+            const isOpen = dropDownMenu.classList.contains('open');
+            toggleBtnIcon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+        };
+    </script>
+
+    <script>
+        document.querySelector('.menu').addEventListener('click', function (e) {
+            e.preventDefault(); 
+            const submenu = this.querySelector('.submenu');
+            submenu.classList.toggle('active'); // Alterna la clase 'active'
+        });
+
+        // Asegura de que el submenú esté visible cuando tenga la clase 'active'
+        const submenuCSS = document.createElement('style');
+        submenuCSS.innerHTML = `
+            .submenu.active {
+                display: block !important;
+            }
+        `;
+        document.head.appendChild(submenuCSS);
+    </script>
+    
+    <script>
+         // Ruta del archivo Excel en el servidor
+         const excelFilePathNov = 'http://localhost/workspace/Libro1.xlsx?.nocache = $newDate().getTime()';
+
+// Función para cargar y procesar el archivo Excel
+function loadExcelFile() {
+    fetch(excelFilePathNov)
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheetName = workbook.SheetNames[11]; 
+            const sheet = workbook.Sheets[sheetName];
+            const jsonData = XLSX.utils.sheet_to_json(sheet); 
+
+            console.log(jsonData); 
+
+            // Procesar los datos del Excel
+            const labels = [];
+            const values = [];
+
+            jsonData.forEach(row => {
+                if (row['AGENCIAS'] && row['noviembre %']) { // Verifica que las columnas existan
+                    labels.push(row['AGENCIAS']);
+                    
+                    const porcentaje = parseFloat(row['noviembre %']) * 100; 
+                    values.push(porcentaje.toFixed(2)); 
+                }
+            });
+
+            // Genera el gráfico
+            const ctx = document.getElementById('november').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar', // Cambia a 'pie', 'line', etc., según el tipo de gráfico
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'noviembre %',
+                        data: values,
+                        backgroundColor: ['#13346a', '#0838a8', '#7593ba'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%'; // Agrega el símbolo % en el eje Y
+                                }
+                            },
+                            beginAtZero: true,
+                            max: 80,
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error al cargar el archivo Excel:', error));
+}
+
+
+
+loadExcelFile();
+</script>
+
+
+<script>
+// Ruta del archivo Excel
+const excelFilePath = 'http://localhost/workspace/Libro1.xlsx?.nocache=' + new Date().getTime();
+
+// Función para procesar datos diarios
+function processDailyData(sheetData, diasColumn, fallosColumn) {
+    const dailyCounts = {
+        labels: [], // Días de la semana
+        data: []    // Fallos correspondientes
+    };
+
+    sheetData.forEach(row => {
+        if (row[diasColumn] && row[fallosColumn]) { // Usa las columnas especificadas
+            dailyCounts.labels.push(row[diasColumn]); 
+            dailyCounts.data.push(parseInt(row[fallosColumn], 10) || 0); 
+        }
+    });
+
+    return dailyCounts;
+}
+
+// Función para cargar datos de una hoja específica y generar un gráfico
+function loadExcelFile(sheetIndex, diasColumn, fallosColumn, chartId, chartLabel) {
+    fetch(excelFilePath)
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            const workbook = XLSX.read(data, { type: 'array' });
+
+            // Selecciona la hoja por índice
+            const sheet = workbook.Sheets[workbook.SheetNames[11]];
+            const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+            console.log(`Datos cargados de la hoja ${workbook.SheetNames[11]}:`, jsonData);
+
+            // Procesar los datos usando las columnas especificadas
+            const dailyData = processDailyData(jsonData, diasColumn, fallosColumn);
+
+            // Crear el gráfico
+            createDailyChart(dailyData, chartId, chartLabel);
+        })
+        .catch(error => console.error('Error al cargar el archivo Excel:', error));
+}
+
+// Función para crear un gráfico
+function createDailyChart({ labels, data }, chartId, chartLabel) {
+    const ctx = document.getElementById(chartId).getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels, // Días de la semana
+            datasets: [{
+                label: chartLabel,
+                data: data, // Fallos correspondientes
+                backgroundColor: ['#13346a', '#014ba0', '#0838a8', '#7593ba', '#96b3ff'],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'top' } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 20,
+                }
+            }
+        }
+    });
+
+    return chart;
+}
+
+// Cargar gráficos para diferentes columnas de la misma hoja
+loadExcelFile(11, 'DIAS-1', 'FALLOS-1', 'weeklyNovChart', 'Fallos Semana 1');
+loadExcelFile(11, 'DIAS-2', 'FALLOS-2', 'weeklyNoyChart', 'Fallos Semana 2');
+loadExcelFile(11, 'DIAS-3', 'FALLOS-3', 'weeklyGenChart', 'Fallos Semana 3');
+loadExcelFile(11, 'DIAS-4', 'FALLOS-4', 'weeklyLisChart', 'Fallos Semana 4');
+loadExcelFile(11, 'DIAS-5', 'FALLOS-5', 'weeklyMarrChart', 'Fallos Semana 5');
+</script>
+
+</body>
+</html>
