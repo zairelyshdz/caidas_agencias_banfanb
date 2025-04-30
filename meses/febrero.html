@@ -123,10 +123,10 @@ function loadExcelFile() {
             const values = [];
 
             jsonData.forEach(row => {
-                if (row['AGENCIAS'] && row['Febrero %']) { // Verifica que las columnas existan
+                if (row['AGENCIAS'] && row['febrero %']) { // Verifica que las columnas existan
                     labels.push(row['AGENCIAS']);
                     
-                    const porcentaje = parseFloat(row['Febrero %']) * 100; 
+                    const porcentaje = parseFloat(row['febrero %']) * 100; 
                     values.push(porcentaje.toFixed(2)); 
                 }
             });

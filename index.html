@@ -86,10 +86,10 @@
                     const values = [];
 
                     jsonData.forEach(row => {
-                        if (row['AGENCIAS'] && row['Marzo %']) { // Verifica que las columnas existan
+                        if (row['AGENCIAS'] && row['marzo %']) { // Verifica que las columnas existan
                             labels.push(row['AGENCIAS']);
                             
-                            const porcentaje = parseFloat(row['Marzo %']) * 100; 
+                            const porcentaje = parseFloat(row['marzo %']) * 100; 
                             values.push(porcentaje.toFixed(2)); 
                         }
                     });
