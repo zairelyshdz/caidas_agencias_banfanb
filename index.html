@@ -21,17 +21,17 @@
                     <a href="#">Meses</a>
                     <ul class="submenu">
                         <li><a href="http://localhost/workspace/meses/enero.html">Enero</a></li>
-                        <li><a href="../workspace/meses/febrero.html">Febrero</a></li>
-                        <li><a href="../workspace/meses/marzo.html">Marzo</a></li>
-                        <li><a href="../workspace/meses/abril.html">Abril</a></li>
-                        <li><a href="../workspace/meses/mayo.html">Mayo</a></li>
-                        <li><a href="../workspace/meses/junio.html">Junio</a></li>
-                        <li><a href="../workspace/meses/julio.html">Julio</a></li>
-                        <li><a href="../workspace/meses/agosto.html">Agosto</a></li>
-                        <li><a href="../workspace/meses/septiembre.html">Septiembre</a></li>
-                        <li><a href="../workspace/meses/octubre.html">Octubre</a></li>
-                        <li><a href="../workspace/meses/noviembre.html">Noviembre</a></li>
-                        <li><a href="../workspace/meses/diciembre.html">Diciembre</a></li>
+                        <li><a href="http://localhost/workspace/meses/febrero.html">Febrero</a></li>
+                        <li><a href="http://localhost/workspace/meses/marzo.html">Marzo</a></li>
+                        <li><a href="http://localhost/workspace/meses/abril.html">Abril</a></li>
+                        <li><a href="http://localhost/workspace/meses/mayo.html">Mayo</a></li>
+                        <li><a href="http://localhost/workspace/meses/junio.html">Junio</a></li>
+                        <li><a href="http://localhost/workspace/meses/julio.html">Julio</a></li>
+                        <li><a href="http://localhost/workspace/meses/agosto.html">Agosto</a></li>
+                        <li><a href="http://localhost/workspace/meses/septiembre.html">Septiembre</a></li>
+                        <li><a href="http://localhost/workspace/meses/octubre.html">Octubre</a></li>
+                        <li><a href="http://localhost/workspace/meses/noviembre.html">Noviembre</a></li>
+                        <li><a href="http://localhost/workspace/meses/diciembre.html">Diciembre</a></li>
                     </ul>
                 </li>
             </ul>
@@ -53,10 +53,11 @@
         <div id="hora"></div>
     </div>
 
+    <h1>Caídas Diarias</h1>
     <canvas id="mySecondChart" width="200" height="100"></canvas>
     <script src="src/charts.js"></script>
 
-    <h1>Reporte Semanal (Total de Fallos)</h1>
+    <h1>Reporte Semanal</h1>
     <canvas id="weeklyChart" width="200" height="100"></canvas>
     <script src="src/weekly.js"></script>
 
@@ -146,11 +147,14 @@
 
     <script>
         document.querySelector('.menu').addEventListener('click', function (e) {
-            e.preventDefault(); // 
-            const submenu = this.querySelector('.submenu');
-            submenu.classList.toggle('active'); 
-        });
+            if (e.target.tagName === 'A') {
+                return; 
+            }
 
+            e.preventDefault(); 
+            const submenu = this.querySelector('.submenu');
+            submenu.classList.toggle('active'); // Alterna la clase 'active'
+        });
 
         const submenuCSS = document.createElement('style');
         submenuCSS.innerHTML = `
