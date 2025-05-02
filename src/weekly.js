@@ -53,7 +53,7 @@ function loadExcelFile() {
             const workbook = XLSX.read(data, { type: 'array' });
 
             // Procesar Hoja3 (Datos diarios)
-            const dailySheet = workbook.Sheets[workbook.SheetNames[4]]; 
+            const dailySheet = workbook.Sheets[workbook.SheetNames[5]]; 
             const dailyJson = XLSX.utils.sheet_to_json(dailySheet);
 
             console.log('Datos cargados del Excel:', dailyJson); // Verifica los datos en la consola
