@@ -9,7 +9,7 @@ function processWeeklyData(sheetData) {
     const weeklyCounts = {};
 
     sheetData.forEach(row => {
-        if (row.DIAS-5 && row['FALLOS-1']) {
+        if (row.DIAS-1 && row['FALLOS-1']) {
             const fecha = new Date(row.DIAS-1 .split('/').reverse().join('-'));
 
             if (isCurrentWeek(fecha)) {
