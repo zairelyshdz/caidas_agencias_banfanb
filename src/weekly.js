@@ -9,8 +9,8 @@ function processWeeklyData(sheetData) {
     const weeklyCounts = {};
 
     sheetData.forEach(row => {
-        if (row.DIAS-5 && row['FALLOS-5']) {
-            const fecha = new Date(row.DIAS-5 .split('/').reverse().join('-'));
+        if (row.DIAS-5 && row['FALLOS-1']) {
+            const fecha = new Date(row.DIAS-1 .split('/').reverse().join('-'));
 
             if (isCurrentWeek(fecha)) {
                 const weekNumber = getWeekNumberInMonth(fecha);
@@ -21,7 +21,7 @@ function processWeeklyData(sheetData) {
                 if (!weeklyCounts[key]) {
                     weeklyCounts[key] = 0; 
                 }
-                weeklyCounts[key] += parseInt(row['FALLOS-5'], 10);
+                weeklyCounts[key] += parseInt(row['FALLOS-1'], 10);
             }
         }
     });
@@ -36,9 +36,9 @@ function processDailyData(sheetData) {
     };
 
     sheetData.forEach(row => {
-        if (row['DIAS-5'] && row['FALLOS-5']) { 
-            dailyCounts.labels.push(row['DIAS-5']); 
-            dailyCounts.data.push(parseInt(row['FALLOS-5'], 10) || 0); 
+        if (row['DIAS-1'] && row['FALLOS-1']) { 
+            dailyCounts.labels.push(row['DIAS-1']); 
+            dailyCounts.data.push(parseInt(row['FALLOS-1'], 10) || 0); 
         }
     });
 
