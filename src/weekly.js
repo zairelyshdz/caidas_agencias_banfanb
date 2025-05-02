@@ -1,4 +1,4 @@
-const excelFilePathThird = 'http://localhost/workspace/Libro1.xlsx?.nocache=' + new Date().getTime();
+const excelFilePathThird = 'https://zairelyshdz.github.io/workspace/Libro1.xlsx?.nocache = $newDate().getTime()';
 
 let dailyChart;
 let weeklyChart;
