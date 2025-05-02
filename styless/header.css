@@ -259,3 +259,351 @@ canvas {
     width: 100% !important; 
     height: auto !important; 
 }
+
+
+.footer{
+    background:#13346a;
+    width:100%;
+    box-sizing: border-box;
+    text-align: left;
+    font-size:16px;
+    font-weight: 500;
+    padding:55px 50px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .footer .footer-left,
+  .footer .footer-center,
+  .footer .footer-right{
+    display:inline-block;
+    vertical-align:top
+  }
+  
+  .footer .footer-left{
+    padding-left:15px;
+  }
+  
+  .footer h3{
+      color:#efedef;
+      font-size:45px;
+      font-family: 'chunkfive';
+      font-weight: 100;
+      margin:0;
+    }
+    
+    .footer h3 span{
+      letter-spacing:-3px
+    }
+  
+    .footer .footer-left p {
+      font-family: 'Sansation';
+      font-style: italic;
+      font-size: 10px;
+      color: #efedef;
+    }
+  
+    .footer .footer-left .slogan{
+      text-align: right;
+    }
+  
+  .footer .footer-links{
+    color:whitesmoke;
+    margin:20px 0 12px;
+    padding:0;
+  }
+  
+  footer .footer-links a{
+    display:inline-block;
+    line-height: 1.8;
+    font-weight:400;
+    text-decoration:none;
+    color:inherit;
+    font-family: 'Raleway', sans-serif;;
+    margin-right:8px;
+  }
+  
+  .footer .footer-company{
+    color:#13346a;
+    font-size:12px;
+    font-weight:normal;
+    margin:0;
+    font-family: 'Raleway', sans-serif;
+  }
+  
+  .footer .footer-center{
+    width:35%;
+    cursor:default;
+  }
+  
+  .footer .footer-center i{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    text-align:center;
+    line-height:36px;
+    margin: 10px 15px;
+    vertical-align:middle;
+    /*background:#33383b;*/
+    font-size:25px;
+  }
+  .footer .footer-center i.icon icon-email{
+    font-size:18px;
+    line-height: 34px;
+  }
+  
+  .footer .footer-center p{
+    display:inline-block;
+    color:whitesmoke;
+    font-weight: normal;
+    vertical-align: middle;
+    margin:0;
+    font-family: 'Raleway', sans-serif;
+  }
+  
+  .footer .footer-center p a{
+    color:rgb(42, 213, 219);
+    text-decoration: none;
+  }
+  
+  .footer .footer-center p span{
+    display:block;
+    font-weight:normal;
+    font-size:14px;
+    line-height: 2;
+  }
+  
+  .footer .footer-links a:before{
+    content:'|';
+    font-weight: normal;
+    font-size:20px;
+    color:whitesmoke;
+    display:inline-block;
+    padding-right:5px;
+    left:0;
+  }
+  
+  .footer .footer-links .link1:before{
+    content:none;
+  }
+  
+  .footer .footer-right{
+    width:20%;
+    cursor:default;
+  }
+  
+  .footer .footer-company-about{
+    line-height: 20px;
+    color:#efedef; /*92999f*/
+    font-size:14px;
+    font-weight:normal;
+    margin:0;
+    font-family: 'Raleway', sans-serif;    
+  }
+  
+  .footer .footer-company-about span{
+    display:block;  
+    color: #efedef;
+    font-size:16px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    font-family: 'Raleway', sans-serif;
+  }
+  
+  .footer .footer-social{
+    margin-top:25px;
+  }
+  
+  .footer .footer-social a{
+    display:inline-block;
+    width:30px;
+    height:30px;
+    background: #33383b;
+    border-radius: 2px;
+    font-size: 15px;
+    line-height:30px;
+    color:#efedef;
+    text-align: center;
+    margin-right: 3px;
+    margin-bottom: 5px;
+  }
+  
+  .footer-last{
+    width: 100%;  
+    margin: auto;
+    background: #101010;
+    }
+    
+   .footer-end{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;  
+    padding: 10px;
+    }
+  
+    .copyright {
+    width:50%;
+    padding-left:12.5%;
+    }
+  
+    .copyright p{
+    color: #C7C7C7;
+    font-family: 'Raleway', sans-serif;
+    font-size:13px;
+    }
+    
+    .copyright a{
+    text-decoration: none;
+    color: #e7e4e4;
+    font-weight: bold;
+    font-size:13px;
+    font-family: 'Chunkfive', sans-serif; 
+    font-weight: 100;
+    }
+    
+    .browser-info{
+    width: 50%;
+    }
+  
+    .browser-info p{
+    color: #C7C7C7;
+    font-size:13px;
+    font-family: 'Raleway', sans-serif;
+    }
+  
+    /** =========================
+  * STYLES RESPONSIVE FOOTER
+  ===========================*/
+  @media(max-width:890px){
+    .footer{
+    display: block;
+    font-size:14px;
+    font-family: 'Raleway', sans-serif;
+    }
+  
+    .footer .footer-left,
+    .footer .footer-center,
+    .footer .footer-right{
+    display:block;
+    width:100%;
+    margin-bottom:20px;
+    text-align: center;
+    }
+  
+    .footer .footer-right{
+    margin-bottom: 0px;
+    }
+  
+    .footer .footer-center{
+    margin-left:0;
+    }
+  
+    .footer-last{
+    width:100%;
+    padding: 5px;
+    }
+  
+    .copyright{
+    width: 50%;
+    padding:0px;
+    }
+  
+    .browser-info{
+    width:50%;
+    padding: 0;
+    }
+  
+    .copyright p{
+    margin-left:15x;
+    padding:0px 20px;
+    }
+  
+    .copyright a{
+    font-weight: bold;
+    }
+    
+    .browser-info p{
+    padding:0px 20px;
+    text-align:left;   
+    }
+  }
+  
+  @media screen and (max-width:402px){
+  .footer{
+  padding:27px 25px;
+  overflow: hidden;
+  }
+  
+  .footer .footer-left{
+  margin-left:0px;
+  padding-left: 0px;
+  }
+    
+  .footer .footer-left h3{
+  font-size:35px;
+  }
+  
+  .footer .footer-links{
+    width:100%;
+  }
+  
+  .footer .footer-links a{
+  font-size:14px;
+  }
+  /*End left section*/
+  
+  .footer .footer-center{
+    margin-left:0px;
+    padding-left: 0px;
+  }
+  
+  .footer .footer-center{
+    width:100%;
+  }
+  
+  .footer .footer-center p,
+  .footer .footer-center a{
+    font-size:14px;
+  }
+  
+  .footer .footer-center p span{
+    font-size: 14px;
+  }
+  
+  /*End center section*/
+  
+  .footer .footer-right{
+    margin-left:0px;
+    padding-left: 0px;
+  }
+  
+  .footer .footer-company-about{
+    color:#e8f0f7; /*92999f*/
+    font-size:13px;
+  }
+  
+  .footer .footer-company-about span{
+    font-size:14px;
+    margin-bottom: 20px;
+  }
+  }
+    
+  @media screen and (max-width:348px){
+  .footer .footer-center p,
+  .footer .footer-center a{
+    font-size:13px;
+  }
+  
+  .footer .footer-center p span{
+    font-size: 13px;
+  }
+  
+  .footer .footer-center i{
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    line-height:26px;
+    margin: 5px 5px;
+    font-size:20px;
+  }
+  }
