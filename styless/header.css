@@ -46,7 +46,7 @@ header{
 
 .navbar{
     width: 100%;
-    height: 60px;
+    height: 80px;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -65,7 +65,7 @@ header{
 }
 
 .navbar .logo img {
-    background: none; 
+    background: #13346a; 
     display: block; 
 }
 
@@ -261,6 +261,76 @@ canvas {
 }
 
 
+.footer {
+    background: #13346a; 
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 55px 50px;
+    display: flex;
+    justify-content: space-between;
+    color: #efedef; 
+}
+
+
+.footer .footer-left,
+.footer .footer-center,
+.footer .footer-right {
+    background: #13346a;
+    color: #efedef; 
+}
+
+
+.footer .footer-left *,
+.footer .footer-center *,
+.footer .footer-right * {
+    background: #13346a !important; 
+    color: #efedef !important; 
+}
+
+
+.footer h3,
+.footer p,
+.footer a {
+    color: #efedef !important; 
+}
+
+
+.footer a:hover {
+    color: #7593ba; 
+}
+
+
+.footer-last {
+    background: #7593ba; /* Azul oscuro */
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+    color: #efedef; 
+}
+
+
+.copyright {
+    color: #efedef; 
+}
+
+.copyright a {
+    color: #efedef; 
+    text-decoration: none;
+}
+
+.copyright a:hover {
+    color: #7593ba; 
+}
+
+
+.browser-info {
+    color: #efedef; 
+}
+
 .footer{
     background:#13346a;
     width:100%;
@@ -277,7 +347,8 @@ canvas {
   .footer .footer-center,
   .footer .footer-right{
     display:inline-block;
-    vertical-align:top
+    vertical-align:top;
+    background: #13346a;
   }
   
   .footer .footer-left{
@@ -287,8 +358,8 @@ canvas {
   .footer h3{
       color:#efedef;
       font-size:45px;
-      font-family: 'chunkfive';
-      font-weight: 100;
+      font-family: 'chukfive' sans-serif!important;
+      font-weight: 100 !important;
       margin:0;
     }
     
@@ -297,7 +368,7 @@ canvas {
     }
   
     .footer .footer-left p {
-      font-family: 'Sansation';
+      font-family: 'Sansation'!important;
       font-style: italic;
       font-size: 10px;
       color: #efedef;
@@ -319,7 +390,7 @@ canvas {
     font-weight:400;
     text-decoration:none;
     color:inherit;
-    font-family: 'Raleway', sans-serif;;
+    font-family: 'Raleway', sans-serif !important;;
     margin-right:8px;
   }
   
@@ -328,7 +399,7 @@ canvas {
     font-size:12px;
     font-weight:normal;
     margin:0;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif !important;
   }
   
   .footer .footer-center{
@@ -344,7 +415,7 @@ canvas {
     line-height:36px;
     margin: 10px 15px;
     vertical-align:middle;
-    /*background:#33383b;*/
+    background:#13346a;
     font-size:25px;
   }
   .footer .footer-center i.icon icon-email{
@@ -354,15 +425,15 @@ canvas {
   
   .footer .footer-center p{
     display:inline-block;
-    color:whitesmoke;
+    color:#13346a;
     font-weight: normal;
     vertical-align: middle;
     margin:0;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'poppins', sans-serif !important;
   }
   
   .footer .footer-center p a{
-    color:rgb(42, 213, 219);
+    color:rgb(42, 213, 219)!important;
     text-decoration: none;
   }
   
@@ -374,7 +445,6 @@ canvas {
   }
   
   .footer .footer-links a:before{
-    content:'|';
     font-weight: normal;
     font-size:20px;
     color:whitesmoke;
@@ -398,7 +468,7 @@ canvas {
     font-size:14px;
     font-weight:normal;
     margin:0;
-    font-family: 'Raleway', sans-serif;    
+    font-family: 'Poppins', sans-serif !important;    
   }
   
   .footer .footer-company-about span{
@@ -407,18 +477,24 @@ canvas {
     font-size:16px;
     font-weight: normal;
     margin-bottom: 20px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif !important;
   }
   
   .footer .footer-social{
     margin-top:25px;
+    background: none !important;
+  }
+
+  .footer .footer-social i{
+    color: #13346a !important;
+    background: none !important;
   }
   
   .footer .footer-social a{
     display:inline-block;
     width:30px;
     height:30px;
-    background: #33383b;
+    background: #7593ba;
     border-radius: 2px;
     font-size: 15px;
     line-height:30px;
@@ -448,7 +524,7 @@ canvas {
   
     .copyright p{
     color: #C7C7C7;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif !important;
     font-size:13px;
     }
     
@@ -457,7 +533,7 @@ canvas {
     color: #e7e4e4;
     font-weight: bold;
     font-size:13px;
-    font-family: 'Chunkfive', sans-serif; 
+    font-family: 'Chunkfive', sans-serif !important; 
     font-weight: 100;
     }
     
@@ -468,7 +544,7 @@ canvas {
     .browser-info p{
     color: #C7C7C7;
     font-size:13px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif !important;
     }
   
     /** =========================
@@ -478,7 +554,7 @@ canvas {
     .footer{
     display: block;
     font-size:14px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif !important;
     }
   
     .footer .footer-left,
