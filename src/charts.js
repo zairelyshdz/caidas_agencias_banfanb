@@ -1,5 +1,5 @@
 // Ruta del archivo Excel en el servidor
-const excelFilePathSecond = 'https://zairelyshdz.github.io/workspace/Libro1.xlsx?.nocache = $newDate().getTime()';
+const excelFilePathSecond = 'https://zairelyshdz.github.io/caidas_agencias_banfanb/Libro1.xlsx?.nocache = $newDate().getTime()';
 
 // Función para cargar y procesar el archivo Excel
 function loadExcelFile() {
