@@ -38,7 +38,7 @@ function processDailyData(sheetData) {
     sheetData.forEach(row => {
         if (row['DIAS-3'] && row['FALLOS-3']) { 
             dailyCounts.labels.push(row['DIAS-3']); 
-            dailyCounts.data.push(parseInt(row['FALLOS-2'], 10) || 0); 
+            dailyCounts.data.push(parseInt(row['FALLOS-3'], 10) || 0); 
         }
     });
 
