@@ -18,13 +18,13 @@ function loadExcelFile() {
             // Procesar los datos del Excel
             const labels = [];
             const values = [];
-            const value = []; //recién agregado
+            const valor = []; //recién agregado
 
             jsonData.forEach(row => {
                 if (row['AGENCIAS'] && row['TOTAL DE FALLAS'] && row['HORA']) { // Verifica que las columnas existan
                     labels.push(row['AGENCIAS']);
                     values.push(row['TOTAL DE FALLAS']);
-                    value.push(row['HORA']); //recién agregado 
+                    valor.push(row['HORA']); //recién agregado 
                 }
             });
 
@@ -36,8 +36,8 @@ function loadExcelFile() {
                     labels: labels,
                     datasets: [{
                         label: 'CAÍDAS DIARIAS',
-                        data: values,
-                        data: value, // recien agregado
+                        label2: 'HORA DE CAÍDA',
+                        data: values, valor,
                         backgroundColor: ['#13346a', '#014ba0','#0838a8','#7593ba', '#96b3ff'],
                     }]
                 },
