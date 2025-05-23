@@ -37,7 +37,7 @@ function loadExcelFile() {
                     datasets: [{
                         label: 'CAÍDAS DIARIAS',
                         data: values,
-                        data2: value, // recien agregado
+                        data: value, // recien agregado
                         backgroundColor: ['#13346a', '#014ba0','#0838a8','#7593ba', '#96b3ff'],
                     }]
                 },
