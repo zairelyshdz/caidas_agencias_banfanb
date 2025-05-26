@@ -1,5 +1,5 @@
 // Ruta del archivo Excel en el servidor
-const excelFilePathSecond = 'https://zairelyshdz.github.io/caidas_agencias_banfanb/Libro1.xlsx?.nocache = $newDate().getTime()';
+const excelFilePathSecond = 'https://zairelyshdz.github.io/caidas_agencias_banfanb/Libro1.xlsx?.nocache=' + new Date().getTime();
 
 // Función para cargar y procesar el archivo Excel
 function loadExcelFile() {
@@ -8,25 +8,24 @@ function loadExcelFile() {
         .then(data => {
             const workbook = XLSX.read(data, { type: 'array' });
 
-            
-            const sheetName = workbook.SheetNames[0]; // Índice 1 corresponde a la segunda hoja
+            const sheetName = workbook.SheetNames[0]; // Índice 0 corresponde a la primera hoja
             const sheet = workbook.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(sheet); 
+            const jsonData = XLSX.utils.sheet_to_json(sheet);
 
-            console.log(jsonData); 
+            console.log(jsonData);
 
             // Procesar los datos del Excel
             const labels = [];
             const values = [];
-            const valor = [];
-            const hora = [];
+            const horasCaida = [];
+            const horasRestablecimiento = [];
 
             jsonData.forEach(row => {
                 if (row['AGENCIAS'] && row['TOTAL DE FALLAS'] && row['HORA'] && row['RESTABLECIMIENTO']) { // Verifica que las columnas existan
                     labels.push(row['AGENCIAS']);
                     values.push(row['TOTAL DE FALLAS']);
-                    valor.push(row['HORA']);
-                    hora.push(row['RESTABLECIMIENTO']);
+                    horasCaida.push(row['HORA']);
+                    horasRestablecimiento.push(row['RESTABLECIMIENTO']);
                 }
             });
 
@@ -38,17 +37,28 @@ function loadExcelFile() {
                     labels: labels,
                     datasets: [{
                         label: 'CAÍDAS DIARIAS',
-                        label2: 'HORA DE CAÍDA',
-                        label3: 'HORA DE RESTABLECIMIENTO',
-                        data: values, 
-                        data2: valor,
-                        data3: hora, 
-                        backgroundColor: ['#13346a', '#014ba0','#0838a8','#7593ba', '#96b3ff'],
+                        data: values,
+                        backgroundColor: ['#13346a', '#014ba0', '#0838a8', '#7593ba', '#96b3ff'],
                     }],
                 },
                 options: {
                     responsive: true,
                     plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    const index = tooltipItem.dataIndex; // Índice del dato actual
+                                    const horaCaida = horasCaida[index];
+                                    const horaRestablecimiento = horasRestablecimiento[index];
+                                    const totalFallas = values[index];
+                                    return [
+                                        `Total Fallas: ${totalFallas}`,
+                                        `Hora de Caída: ${horaCaida}`,
+                                        `Hora de Restablecimiento: ${horaRestablecimiento}`
+                                    ];
+                                }
+                            }
+                        },
                         legend: {
                             position: 'top',
                         },
