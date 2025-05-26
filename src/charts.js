@@ -24,8 +24,8 @@ function loadExcelFile() {
                 if (row['AGENCIAS'] && row['TOTAL DE FALLAS'] && row['HORA'] && row['RESTABLECIMIENTO']) { // Verifica que las columnas existan
                     labels.push(row['AGENCIAS']);
                     values.push(row['TOTAL DE FALLAS']);
-                    horasCaida.push(row['HORA'].toFixed(2));
-                    horasRestablecimiento.push(row['RESTABLECIMIENTO'].toFixed(2));
+                    horasCaida.push(row['HORA']);
+                    horasRestablecimiento.push(row['RESTABLECIMIENTO']);
                 }
             });
 
@@ -48,8 +48,8 @@ function loadExcelFile() {
                             callbacks: {
                                 label: function(tooltipItem) {
                                     const index = tooltipItem.dataIndex; 
-                                    const horaCaida = horasCaida[index];
-                                    const horaRestablecimiento = horasRestablecimiento[index];
+                                    const horaCaida = horasCaida[index].toFixed(2);
+                                    const horaRestablecimiento = horasRestablecimiento[index].toFixed(2);
                                     const totalFallas = values[index];
                                     return [
                                         `Total Fallas: ${totalFallas}`,
