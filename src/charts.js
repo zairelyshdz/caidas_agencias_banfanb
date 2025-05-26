@@ -18,11 +18,15 @@ function loadExcelFile() {
             // Procesar los datos del Excel
             const labels = [];
             const values = [];
+            const valor = [];
+            const hora = [];
 
             jsonData.forEach(row => {
-                if (row['AGENCIAS'] && row['TOTAL DE FALLAS']) { // Verifica que las columnas existan
+                if (row['AGENCIAS'] && row['TOTAL DE FALLAS'] && row['HORA'] && row['RESTABLECIMIENTO']) { // Verifica que las columnas existan
                     labels.push(row['AGENCIAS']);
                     values.push(row['TOTAL DE FALLAS']);
+                    valor = row['HORA'];
+                    hora = row['RESTABLECIMIENTO'];
                 }
             });
 
@@ -36,6 +40,14 @@ function loadExcelFile() {
                         label: 'CAÍDAS DIARIAS',
                         data: values, 
                         backgroundColor: ['#13346a', '#014ba0','#0838a8','#7593ba', '#96b3ff'],
+                    }],
+                    dataset1: [{
+                        label: "HORA DE CAÍDA",
+                        data: valor, 
+                    }],
+                    dataset2: [{
+                        label: "HORA DE RESTABLECIMIENTO",
+                        data: hora, 
                     }]
                 },
                 options: {
