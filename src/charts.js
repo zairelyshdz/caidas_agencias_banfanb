@@ -38,17 +38,11 @@ function loadExcelFile() {
                     labels: labels,
                     datasets: [{
                         label: 'CAÍDAS DIARIAS',
-                        data: values, 
+                        label2: 'HORA DE CAÍDA',
+                        label3: 'HORA DE RESTABLECIMIENTO',
+                        data: values, valor, hora, 
                         backgroundColor: ['#13346a', '#014ba0','#0838a8','#7593ba', '#96b3ff'],
                     }],
-                    dataset1: [{
-                        label: "HORA DE CAÍDA",
-                        data: valor, 
-                    }],
-                    dataset2: [{
-                        label: "HORA DE RESTABLECIMIENTO",
-                        data: hora, 
-                    }]
                 },
                 options: {
                     responsive: true,
