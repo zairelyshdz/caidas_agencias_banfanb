@@ -47,7 +47,7 @@ function loadExcelFile() {
                         tooltip: {
                             callbacks: {
                                 label: function(tooltipItem) {
-                                    const index = tooltipItem.dataIndex; // Índice del dato actual
+                                    const index = tooltipItem.dataIndex; 
                                     const horaCaida = horasCaida[index];
                                     const horaRestablecimiento = horasRestablecimiento[index];
                                     const totalFallas = values[index];
