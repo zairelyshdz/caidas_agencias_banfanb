@@ -21,11 +21,11 @@ function loadExcelFile() {
             const horasRestablecimiento = [];
 
             jsonData.forEach(row => {
-                if (row['AGENCIAS'] && row['TOTAL DE FALLAS'] && row['HORA'] && row['RESTABLECIMIENTO']) { // Verifica que las columnas existan
+                if (row['AGENCIAS'] && row['TOTAL DE FALLAS'] && row['H.CAIDA'] && row['H.RESTABLECIMIENTO']) { // Verifica que las columnas existan
                     labels.push(row['AGENCIAS']);
                     values.push(row['TOTAL DE FALLAS']);
-                    horasCaida.push(row['HORA']);
-                    horasRestablecimiento.push(row['RESTABLECIMIENTO']);
+                    horasCaida.push(row['H.CAIDA']);
+                    horasRestablecimiento.push(row['H.RESTABLECIMIENTO']);
                 }
             });
 
