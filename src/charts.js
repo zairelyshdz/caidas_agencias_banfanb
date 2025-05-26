@@ -24,8 +24,8 @@ function loadExcelFile() {
                 if (row['AGENCIAS'] && row['TOTAL DE FALLAS'] && row['HORA'] && row['RESTABLECIMIENTO']) { // Verifica que las columnas existan
                     labels.push(row['AGENCIAS']);
                     values.push(row['TOTAL DE FALLAS']);
-                    horasCaida.push(row['HORA'].toFixed(2));
-                    horasRestablecimiento.push(row['RESTABLECIMIENTO'].toFixed(2));
+                    horasCaida.push(row['HORA']);
+                    horasRestablecimiento.push(row['RESTABLECIMIENTO']);
                 }
             });
 
