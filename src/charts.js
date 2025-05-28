@@ -17,15 +17,15 @@ function loadExcelFile() {
             // Procesar los datos del Excel
             const labels = [];
             const values = [];
-            const horasCaida = [];
-            const horasRestablecimiento = [];
+            //const horasCaida = [];
+            //const horasRestablecimiento = [];
 
             jsonData.forEach(row => {
-                if (row['AGENCIAS'] && row['TOTAL DE FALLAS'] && row['CAIDA'] && row['RESTABLECIMIENTO']) { // Verifica que las columnas existan
+                if (row['AGENCIAS'] && row['TOTAL DE FALLAS'] /*&& row['CAIDA'] && row['RESTABLECIMIENTO']*/) { // Verifica que las columnas existan
                     labels.push(row['AGENCIAS']);
                     values.push(row['TOTAL DE FALLAS']);
-                    horasCaida.push(row['CAIDA']);
-                    horasRestablecimiento.push(row['RESTABLECIMIENTO']);
+                    /*horasCaida.push(row['CAIDA']);
+                    horasRestablecimiento.push(row['RESTABLECIMIENTO']);*/
                 }
             });
 
@@ -44,7 +44,7 @@ function loadExcelFile() {
                 options: {
                     responsive: true,
                     plugins: {
-                        tooltip: {
+                        /*tooltip: {
                             callbacks: {
                                 label: function(tooltipItem) {
                                     const index = tooltipItem.dataIndex; 
@@ -58,7 +58,7 @@ function loadExcelFile() {
                                     ];
                                 }
                             }
-                        },
+                        },*/
                         legend: {
                             position: 'top',
                         },
