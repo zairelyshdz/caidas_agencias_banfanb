@@ -75,9 +75,13 @@
     <canvas id="weeklyChart" width="200" height="100"></canvas>
     <script src="src/weekly.js"></script>
 
-    <h1>Reporte Abril</h1>
+    <h1>Reporte Mayo</h1>
 
     <canvas id="myChart" width="200" height="100"></canvas>
+
+    <h1>Reporte 1 Semestre 2025</h1>
+
+    <canvas id="mySemChart" width="200" height="100"></canvas>
 
 
     <footer class="footer">
@@ -163,7 +167,7 @@
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: 'abril %',
+                                label: 'mayo %',
                                 data: values,
                                 backgroundColor: ['#13346a', '#0838a8', '#7593ba',], 
                             }]
@@ -194,6 +198,75 @@
         loadExcelFile();
 
     </script>
+
+<script>
+    // Ruta del archivo Excel en el servidor
+    const excelFilePathSeme = 'https://zairelyshdz.github.io/caidas_agencias_banfanb/Libro1.xlsx?.nocache = $newDate().getTime()';
+
+    // Función para cargar y procesar el archivo Excel
+    function loadExcelFile() {
+        fetch(excelFilePathSeme)
+            .then(response => response.arrayBuffer())
+            .then(data => {
+                const workbook = XLSX.read(data, { type: 'array' });
+                const sheetName = workbook.SheetNames[13]; 
+                const sheet = workbook.Sheets[sheetName];
+                const jsonData = XLSX.utils.sheet_to_json(sheet); 
+
+                console.log(jsonData); 
+
+                // Procesar los datos del Excel
+                const labels = [];
+                const values = [];
+
+                jsonData.forEach(row => {
+                    if (row['AGENCIAS'] && row['semestre %']) { // Verifica que las columnas existan
+                        labels.push(row['AGENCIAS']);
+                        
+                        const porcentaje = parseFloat(row['semestre %']) * 100; 
+                        values.push(porcentaje.toFixed(2)); 
+                    }
+                });
+
+                // Genera el gráfico
+                const ctx = document.getElementById('myChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar', // Cambia a 'pie', 'line', etc., según el tipo de gráfico
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'semestre 1 %',
+                            data: values,
+                            backgroundColor: ['#13346a', '#0838a8', '#7593ba',], 
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                        },
+                        scales: {
+                            y: {
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%'; // Agrega el símbolo % en el eje Y
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error al cargar el archivo Excel:', error));
+    }
+
+    
+    loadExcelFile();
+
+</script>
+
     <script>
         const toggleBtn = document.querySelector('.toggle_btn');
         const toggleBtnIcon = document.querySelector('.toggle_btn i');
