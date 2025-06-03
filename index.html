@@ -137,7 +137,7 @@
                 .then(response => response.arrayBuffer())
                 .then(data => {
                     const workbook = XLSX.read(data, { type: 'array' });
-                    const sheetName = workbook.SheetNames[4]; 
+                    const sheetName = workbook.SheetNames[5]; 
                     const sheet = workbook.Sheets[sheetName];
                     const jsonData = XLSX.utils.sheet_to_json(sheet); 
 
@@ -148,10 +148,10 @@
                     const values = [];
 
                     jsonData.forEach(row => {
-                        if (row['AGENCIAS'] && row['abril %']) { // Verifica que las columnas existan
+                        if (row['AGENCIAS'] && row['mayo %']) { // Verifica que las columnas existan
                             labels.push(row['AGENCIAS']);
                             
-                            const porcentaje = parseFloat(row['abril %']) * 100; 
+                            const porcentaje = parseFloat(row['mayo %']) * 100; 
                             values.push(porcentaje.toFixed(2)); 
                         }
                     });
