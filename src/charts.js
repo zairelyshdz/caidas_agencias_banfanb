@@ -44,21 +44,6 @@ function loadExcelFile() {
                 options: {
                     responsive: true,
                     plugins: {
-                        /*tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    const index = tooltipItem.dataIndex; 
-                                    const horaCaida = horasCaida[index];
-                                    const horaRestablecimiento = horasRestablecimiento[index];
-                                    const totalFallas = values[index];
-                                    return [
-                                        `Total Fallas: ${totalFallas}`,
-                                        `Hora de Caída: ${horaCaida}`,
-                                        `Hora de Restablecimiento: ${horaRestablecimiento}`
-                                    ];
-                                }
-                            }
-                        },*/
                         legend: {
                             position: 'top',
                         },
