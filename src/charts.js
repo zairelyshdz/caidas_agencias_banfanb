@@ -36,7 +36,7 @@ function loadExcelFile() {
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'SIN ENERGÍA ELÉCTRICA',
+                        label: 'SIN ENERGÍA ELÉCTRICA - CAÍDAS DIARIAS',
                         data: values,
                         backgroundColor: ['#13346a', '#014ba0', '#0838a8', '#7593ba', '#96b3ff'],
                     }],
